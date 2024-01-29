@@ -1,0 +1,24 @@
+<!-- shop.html -->
+
+{% extends "base.html" %}
+
+{% block title %}Shop - {{ super() }}{% endblock %}
+
+{% block content %}
+    <h1>Explore Our Shop</h1>
+
+    <div class="row">
+        {% for shirt in shirts %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ shirt.image_url }}" class="card-img-top" alt="{{ shirt.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ shirt.name }}</h5>
+                        <p class="card-text">Price: ${{ shirt.price }}</p>
+            
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
