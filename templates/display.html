@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Page</title>
+</head>
+<body>
+    <h1>Your Design</h1>
+
+    {% if canvas_content %}
+    <p>Here is your saved design:</p>
+    <img src="{{ url_for('display_image', filename=canvas_content) }}" alt="Saved Design">
+    {% else %}
+    <p>No saved design available yet.</p>
+    {% endif %}
+</body>
+</html>
