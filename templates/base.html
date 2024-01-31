@@ -10,6 +10,24 @@
             margin-right: 20px;
             margin-left: 150px;
         }
+        /* Style for the dropdown menu */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
     </style>
 </head>
 <body>
@@ -34,6 +52,12 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Our Shop</a>
+                            <div class="dropdown-content">
+                                <a href="#">all products</a>
+                                <a href="#">shirts</a>
+                                <a href="#">Hoodies</a>
+
+                            </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Customize It</a>
