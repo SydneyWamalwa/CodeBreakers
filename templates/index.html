@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,7 +51,7 @@
 
         #canvas-container {
             position: relative;
-            width: 60%;
+            width: 600px;
             height: 500px;
             border: 1px solid #ccc;
             overflow: hidden;
@@ -123,32 +124,38 @@
         button:hover {
             background-color: #45a049;
         }
+
+        .new {
+            display: flex;
+        }
     </style>
 </head>
+
 <body>
     <nav>
         <a href="/shop">Shop</a>
         <a href="/add_product">Admin</a>
-
     </nav>
-    <div id="container">
+    <div class="new">
         <div id="color-options">
             <button onclick="changeShirtColor('/static/images/wt.jpeg', 'White')"><img src="/static/images/wt.jpeg" alt="White T-Shirt" width="60px" height="60px"></button>
             <button onclick="changeShirtColor('/static/images/blt.jpeg', 'Black')"><img src="/static/images/blt.jpeg" alt="Black T-Shirt" width="60px" height="60px"></button>
             <!-- Add more color options as needed -->
         </div>
 
-        <div id="canvas-container">
-            <canvas id="tshirt" width="500" height="500"></canvas>
+        <div id="container">
+            <div id="canvas-container">
+                <canvas id="tshirt" width="5000" height="500"></canvas>
+            </div>
         </div>
 
-        <div class="design-section">
-            <h2>Designs</h2>
-            <div class="design-container" id="design-container">
-                <!-- Add drag-and-drop designs here -->
-                <img class="design" src="/static/images/d1.jpeg" alt="Design 1" width="100px" height="100px">
-                <img class="design" src="/static/images/d2.jpg" alt="Design 2" width="100px" height="100px">
+        <div class="design-container" id="design-container">
+            <div class="design-section">
+                <h2>Designs</h2>
             </div>
+            <!-- Add drag-and-drop designs here -->
+            <img class="design" src="/static/images/d1.jpeg" alt="Design 1" width="100px" height="100px">
+            <img class="design" src="/static/images/d2.jpg" alt="Design 2" width="100px" height="100px">
         </div>
     </div>
 
@@ -159,10 +166,9 @@
     <script src="https://cdn.jsdelivr.net/npm/dragula/dist/dragula.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
 
-
     <script>
+
         let selectedDesign;
-        const resizeFactor = 1.1; // Adjust the resizing factor as needed
 
         function changeShirtColor(imagePath, colorLabel) {
             const tshirt = document.getElementById("tshirt");
@@ -177,57 +183,40 @@
         }
 
         function saveCustomDesign() {
-    const tshirtContainer = document.getElementById('container');
-    const tshirtCanvas = document.getElementById('canvas-container');
+            const tshirtContainer = document.getElementById('canvas-container');
 
-    // Calculate the central area excluding the colors section and designs
-    const canvasRect = tshirtCanvas.getBoundingClientRect();
-    const colorsSectionWidth = document.getElementById('color-options').offsetWidth;
-    const designsSectionWidth = document.getElementById('design-container').offsetWidth;
+            // Use dom-to-image to capture the content of the canvas container
+            domtoimage.toPng(tshirtContainer)
+                .then(dataUrl => {
+                    // Send dataUrl to the server using Fetch API
+                    fetch('/save_canvas', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            canvas_content: dataUrl,
+                        }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Server response:', data);
+                        // Optionally handle the response from the server
 
-    const centralArea = {
-        left: canvasRect.left + colorsSectionWidth,
-        top: canvasRect.top,
-        width: canvasRect.width - colorsSectionWidth - designsSectionWidth,
-        height: canvasRect.height,
-    };
-
-    // Use dom-to-image to capture the central area within the container
-    domtoimage.toPng(tshirtContainer, centralArea)
-        .then(dataUrl => {
-            // Send dataUrl to the server using Fetch API
-            fetch('/save_canvas', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    canvas_content: dataUrl,
-                }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Server response:', data);
-                // Optionally handle the response from the server
-
-                // Redirect
-                window.location.href = `/display/${data.filename}`;
-            })
-            .catch(error => {
-                console.error('Error sending data to the server:', error);
-            });
-        })
-        .catch(error => {
-            console.error('Error capturing canvas content:', error);
-        });
-}
-
-
-
+                        // Redirect
+                        window.location.href = `/display/${data.filename}`;
+                    })
+                    .catch(error => {
+                        console.error('Error sending data to the server:', error);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error capturing canvas content:', error);
+                });
+        }
 
         document.addEventListener("DOMContentLoaded", function () {
             const designContainer = document.getElementById('design-container');
-            const tshirt = document.getElementById('tshirt');
             const tshirtContainer = document.getElementById('canvas-container');
 
             // Add drag and drop events for designs
@@ -245,16 +234,16 @@
 
                 if (selectedDesign) {
                     // Get the bounding rectangle of the T-shirt canvas
-                    const tshirtRect = tshirt.getBoundingClientRect();
+                    const tshirtRect = tshirtContainer.getBoundingClientRect();
 
                     // Calculate the position relative to the T-shirt canvas
                     const offsetX = event.clientX - tshirtRect.left;
                     const offsetY = event.clientY - tshirtRect.top;
 
-                    // Clone the original design and append it to the design container
+                    // Clone the original design and append it to the T-shirt container
                     const newDesign = selectedDesign.cloneNode(true);
                     newDesign.classList.remove('design');
-                    designContainer.appendChild(newDesign);
+                    tshirtContainer.appendChild(newDesign);
 
                     // Update the position of the new design element
                     newDesign.style.position = 'absolute';
@@ -285,7 +274,7 @@
                     .on('resizemove', function (event) {
                         const target = event.target;
 
-                        // Check if the target is the clone, and prevent default action if true
+                        // Check if the target is the clone, and prevent the default action if true
                         if (event.rect.width !== event.deltaRect.width || event.rect.height !== event.deltaRect.height) {
                             event.preventDefault();
                         }
@@ -306,14 +295,17 @@
                     .on('dragmove', function (event) {
                         const target = event.target;
 
-                        // Check if the target is the clone, and prevent default action if true
+                        // Check if the target is the clone, and prevent the default action if true
                         if (event.rect.width !== event.deltaRect.width || event.rect.height !== event.deltaRect.height) {
                             event.preventDefault();
                         }
                     });
             }
         });
+
+
     </script>
 
 </body>
+
 </html>
