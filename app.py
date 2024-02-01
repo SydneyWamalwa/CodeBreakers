@@ -51,34 +51,34 @@ init_db()
 def home():
     return render_template('index.html')
 #design routes
-@app.route('/save_canvas', methods=['POST'])
-def save_canvas_content():
-    if request.method == 'POST':
-        canvas_content = request.json.get('canvas_content')
-        img_data = base64.b64decode(canvas_content.split(',')[1])
+# @app.route('/save_canvas', methods=['POST'])
+# def save_canvas_content():
+#     if request.method == 'POST':
+#         canvas_content = request.json.get('canvas_content')
+#         img_data = base64.b64decode(canvas_content.split(',')[1])
 
-        os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+#         os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-        filename = f'tshirt_{int(time.time())}.png'
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+#         filename = f'tshirt_{int(time.time())}.png'
+#         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
-        with open(filepath, 'wb') as f:
-            f.write(img_data)
+#         with open(filepath, 'wb') as f:
+#             f.write(img_data)
 
-        db = get_db()
-        cursor = db.cursor()
-        cursor.execute('INSERT INTO saved_canvas_content (content) VALUES (?)', (filename,))
-        db.commit()
+#         db = get_db()
+#         cursor = db.cursor()
+#         cursor.execute('INSERT INTO saved_canvas_content (content) VALUES (?)', (filename,))
+#         db.commit()
 
-        return jsonify({'status': 'success', 'filename': filename})
+#         return jsonify({'status': 'success', 'filename': filename})
 
-@app.errorhandler(Exception)
-def handle_error(e):
-    return jsonify({'error': str(e)}), 500
+# @app.errorhandler(Exception)
+# def handle_error(e):
+#     return jsonify({'error': str(e)}), 500
 
-@app.route('/display/<filename>')
-def display_image(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+# @app.route('/display/<filename>')
+# def display_image(filename):
+#     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 #shop routes
 @app.route('/shop')
 def products():
@@ -113,13 +113,15 @@ def add_product():
         return redirect(url_for('products'))
 
     return render_template('admin.html')
-@app.route('/shop_display')
-def shop_display():
-    db = get_db()
-    cursor = db.cursor()
-    cursor.execute("SELECT * FROM products")
-    records = cursor.fetchall()
-    return render_template('shop.html', records=records)
+# @app.route('/shop_display')
+# def shop_display():
+#     db = get_db()
+#     cursor = db.cursor()
+#     cursor.execute("SELECT * FROM products")
+#     records = cursor.fetchall()
+#     return render_template('shop.html', records=records)
+
+
 @app.route('/product_image/<int:id>')
 def product_image(id):
     db = get_db()

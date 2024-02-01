@@ -1,0 +1,15 @@
+{
+  "name": "codebreakers",
+  "version": "1.0.0",
+  "description": "This is a web app running on Flask that is meant for customizing clothing.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "lite-server"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lite-server": "^2.6.1"
+  }
+}
