@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/CSS/style.css">
     <title>Shop</title>
     <style>
+        
         /* Add some basic styling for the grid */
-        .grid-container {
+        /* .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 20px;
@@ -16,21 +18,47 @@
 
         .grid-item {
             text-align: center;
-        }
+        } */
     </style>
 </head>
 <body>
-    <h2>Shop</h2>
+    <!-- <h2>Shop</h2> -->
 
     <div class="grid-container">
-        {% for record in records %}
-            <div class="grid-item">
+        <header class="header">
+            <div class="brand">
+                <img src="/static/images/RG2.png" class="brand-logo" alt="logo">
+                <span class="brand-name">PopKulture</span>
+            </div>
+            <div class="navbar">
+                <ul>
+                    <li><a href="#">shop</a></li>
+                    <li><a href="/add_product">Create it</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="shopping">
+                <img src="/static/images/shopping_cart.png" alt="shopping cart">
+                <span>Add to Cart</span>
+            </div>
+        </header>
+        <main class="main">
+            <!-- <div style="background-color: red;">one</div>
+            <div style="background-color: green;">one</div>
+            <div  style="background-color: gray;">one</div>
+            <div  style="background-color: gray;">one</div> -->
+            {% for record in records %}
+            <div class="product-details">
                 <img src="{{ url_for('product_image', id=record[0]) }}" alt="Product Image" style="max-width: 100%;">
                 <p>ID: {{ record[0] }}</p>
                 <p>Description: {{ record[1] }}</p>
                 <p>Price: {{ record[2] }}</p>
+                <button type="button" class="add-cart"><a href="#">add to cart</a></button>
             </div>
         {% endfor %}
+        </main>
+        <footer>Footer</footer>
     </div>
 </body>
 </html>

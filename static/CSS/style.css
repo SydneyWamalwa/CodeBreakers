@@ -1,0 +1,120 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    height: 100vh;
+    text-align: center;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: minmax(100px, auto);
+    grid-gap: 10px;
+    max-width: 960px;
+    margin: 0 auto;
+
+}
+header{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: auto;
+    grid-column: 1 / 13;
+    background: #fff;
+    padding: 30px;
+    align-items: center;
+    justify-content: space-between;
+}
+.brand{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+.brand-logo{
+    width: 50px;
+    height: 50px;
+}
+
+.navbar {
+    width: auto;
+
+}
+.navbar ul{
+    display: flex;
+    padding: 20px;
+    justify-content: space-evenly;
+    list-style: none;
+}
+li a{
+    list-style: none;
+    text-decoration: none;
+}
+li:hover{
+    background-color: lightgray;
+    transform: scale(1.5);
+}
+.shopping{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+
+
+main{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-auto-rows: auto;
+    grid-gap: 10px;
+    grid-column: 2 / 12;
+    grid-row: 2 / 10;
+    background: blue;
+    padding: 30px;
+}
+.product-details{
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: auto;
+    background: red;
+}
+.product-details img{
+    grid-column: 1 / 13;
+
+}
+.product-details p{
+    grid-column: 1 / 13;
+    display: flex;
+    align-items: start;
+    justify-content: start;
+}
+.product-details .add-cart{
+    grid-column: -1 / -6;
+    grid-row: 5/ 6 ;
+    align-items: end;
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
+.add-cart a{
+    text-decoration: none;
+    cursor: pointer;
+
+}
+.add-cart:hover{
+    background-color: greenyellow;
+}
+
+
+
+
+
+
+
+
+.grid-container footer {
+    grid-column:1 / 13;
+    background: green;
+    padding: 30px;
+}
