@@ -51,7 +51,7 @@
 
         #canvas-container {
             position: relative;
-            width: 600px;
+            width: 500px;
             height: 500px;
             border: 1px solid #ccc;
             overflow: hidden;
@@ -61,8 +61,8 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 500px;
+            height: 500px;
             background-size: contain;
             background-repeat: no-repeat;
             overflow: hidden;
@@ -122,25 +122,72 @@
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color: orange;
         }
 
         .new {
             display: flex;
         }
+        header{
+            background-color: #333;
+            padding: 30px;
+        }
+        nav a{
+            margin: 200px;
+            color: #fff;
+            text-decoration: none;
+
+        }
+
+        nav a:hover{
+            color: orange;
+        }
+
+        .bdy{
+            margin-left: 290px;
+        }
+
+        .sizes p{
+            border: 2px solid black;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 20px;
+        }
+
+        .sizes p:hover{
+            background-color: orange;
+        }
+
     </style>
 </head>
 
 <body>
-    <nav>
-        <a href="/shop">Shop</a>
-        <a href="/add_product">Admin</a>
-    </nav>
+    <header>
+        <nav>
+            <a href="/shop">Shop</a>
+            <a href="/add_product">Admin</a>
+            <a href="">Customize </a>
+        </nav>
+    </header>
+
+    <div class="bdy">
     <div class="new">
         <div id="color-options">
+            <h2>Color-Options</h2>
+            <div>
             <button onclick="changeShirtColor('/static/images/wt.jpeg', 'White')"><img src="/static/images/wt.jpeg" alt="White T-Shirt" width="60px" height="60px"></button>
             <button onclick="changeShirtColor('/static/images/blt.jpeg', 'Black')"><img src="/static/images/blt.jpeg" alt="Black T-Shirt" width="60px" height="60px"></button>
             <!-- Add more color options as needed -->
+        </div>
+            <div>
+                <div class="sizes">
+                <p>Small</p>
+                <p>Medium</p>
+                <p>Large</p>
+                <p>XL</p>
+                <p>XXL</p>
+            </div>
+        </div>
         </div>
 
         <div id="container">
@@ -152,10 +199,12 @@
         <div class="design-container" id="design-container">
             <div class="design-section">
                 <h2>Designs</h2>
-            </div>
             <!-- Add drag-and-drop designs here -->
+            <div>
             <img class="design" src="/static/images/d1.jpeg" alt="Design 1" width="100px" height="100px">
             <img class="design" src="/static/images/d2.jpg" alt="Design 2" width="100px" height="100px">
+        </div>
+            </div>
         </div>
     </div>
 
@@ -305,7 +354,7 @@
 
 
     </script>
-
+</div>
 </body>
 
 </html>
