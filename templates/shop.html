@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop</title>
+    <style>
+        /* Add some basic styling for the grid */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .grid-item {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>Shop</h2>
+
+    <div class="grid-container">
+        {% for record in records %}
+            <div class="grid-item">
+                <img src="{{ url_for('product_image', id=record[0]) }}" alt="Product Image" style="max-width: 100%;">
+                <p>ID: {{ record[0] }}</p>
+                <p>Description: {{ record[1] }}</p>
+                <p>Price: {{ record[2] }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
