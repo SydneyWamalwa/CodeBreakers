@@ -52,10 +52,11 @@
             <div  style="background-color: gray;">one</div> -->
             {% for record in records %}
             <div class="product-details">
-                <img src="{{ url_for('product_image', id=record[0]) }}" alt="Product Image" style="max-width: 100%;">
-                <p>ID: {{ record[0] }}</p>
+                <img src="{{ url_for('product_image', unique_id=record[0]) }}" alt="Product Image" style="max-width: 100%;">
+                <!-- <p>productID: {{ record[0] }}</p> -->
                 <p>Description: {{ record[1] }}</p>
                 <p>Price: {{ record[2] }}</p>
+                <p>color: {{ record[3] }}</p>
                 <button type="button" class="add-cart"><a href="#">add to cart</a></button>
             </div>
         {% endfor %}
