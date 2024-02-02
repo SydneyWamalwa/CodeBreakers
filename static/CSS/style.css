@@ -83,6 +83,10 @@ main{
     grid-column: 1 / 13;
 
 }
+.product-details > img{
+    width: 100%;
+    height: auto;
+}
 .product-details p{
     grid-column: 1 / 13;
     display: flex;
@@ -105,10 +109,6 @@ main{
 .add-cart:hover{
     background-color: greenyellow;
 }
-
-
-
-
 
 
 

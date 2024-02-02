@@ -5,6 +5,7 @@ import sqlite3
 import os
 import time
 import base64
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -12,6 +13,12 @@ app.config['DATABASE'] = 'popkulture.db'
 app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'static', 'uploads')
 app.config['UPLOAD_FOLDER1'] = os.path.join(os.getcwd(), 'static', 'products')
+
+# generate a unique id for product table#
+def generate_unique_id():
+    timestamp = int(datetime.now().strftime("%Y%m%d%H%M%S%f"))
+    return str(timestamp)
+
 
 def get_db():
     db = getattr(g, '_database', None)
@@ -31,9 +38,10 @@ def init_db():
         cursor = db.cursor()
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS products (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                unique_id TEXT PRIMARY KEY NOT NULL,
                 description TEXT NOT NULL,
                 price VARCHAR NOT NULL,
+                color VARCHAR NOT NULL,
                 image BLOB NOT NULL
                                    )
         ''')
@@ -94,12 +102,14 @@ def add_product():
     if request.method == 'POST':
         description = request.form['description']
         price = request.form['price']
+        color = request.form['color']
         image = request.files['image'].read()
 
         db = get_db()
         cursor = db.cursor()
-        cursor.execute('INSERT INTO products (description, price, image) VALUES (?, ?, ?)',
-                       (description, price, image))
+        unique_id = generate_unique_id()
+        cursor.execute('INSERT INTO products (unique_id, description, price, color, image) VALUES (?, ?, ?, ?, ?)',
+                       (unique_id, description, price, color, image))
         db.commit()
 
         os.makedirs(app.config['UPLOAD_FOLDER1'], exist_ok=True)
@@ -122,11 +132,11 @@ def add_product():
 #     return render_template('shop.html', records=records)
 
 
-@app.route('/product_image/<int:id>')
-def product_image(id):
+@app.route('/product_image/<string:unique_id>')
+def product_image(unique_id):
     db = get_db()
     cursor = db.cursor()
-    cursor.execute("SELECT image FROM products WHERE id = ?", (id,))
+    cursor.execute("SELECT image FROM products WHERE unique_id = ?", (unique_id,))
     image = cursor.fetchone()[0]
     return send_file(BytesIO(image), mimetype='image/jpeg')
 
