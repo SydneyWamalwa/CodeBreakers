@@ -51,10 +51,6 @@ body {
 .shop-cart-link{
     cursor: pointer;
 }
-.shop-cart-link.clicked + .cart-section {
-    /* display: block; */
-    /* Add styling for the clicked state */
-}
 
 .cart-column {
 
