@@ -5,24 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/CSS/style.css">
+    <script src="/static/JS/shop.js"></script>
     <title>Shop</title>
-    <style>
-        
-        /* Add some basic styling for the grid */
-        /* .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            justify-content: center;
-        }
-
-        .grid-item {
-            text-align: center;
-        } */
-    </style>
 </head>
 <body>
-    <!-- <h2>Shop</h2> -->
 
     <div class="grid-container">
         <header class="header">
@@ -39,25 +25,104 @@
                 </ul>
             </div>
             <div class="shopping">
-                <img src="/static/images/shopping_cart.png" alt="shopping cart">
-                <span>Add to Cart</span>
+                <a class="shop-cart-link">
+                    <span class="shop-cart-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z"/></svg>
+                    </span>
+                    <span class="shop-items-count">0</span>
+                </a>
             </div>
         </header>
         <main class="main">
-            <!-- <div style="background-color: red;">one</div>
-            <div style="background-color: green;">one</div>
-            <div  style="background-color: gray;">one</div>
-            <div  style="background-color: gray;">one</div> -->
-            {% for record in records %}
-            <div class="product-details">
-                <img src="{{ url_for('product_image', unique_id=record[0]) }}" alt="Product Image" style="max-width: 100%;">
-                <!-- <p>productID: {{ record[0] }}</p> -->
-                <p>Description: {{ record[1] }}</p>
-                <p>Price: {{ record[2] }}</p>
-                <p>color: {{ record[3] }}</p>
-                <button type="button" class="add-cart"><a href="#">add to cart</a></button>
+            <section class="container content-section cart-section">
+                <h2 class="section-header">CART</h2>
+                <div class="cart-row">
+                    <span class="cart-product cart-header cart-column">PRODUCT</span>
+                    <span class="cart-color cart-header cart-column">COLOR</span>
+                    <span class="cart-quantity cart-header cart-column">QUANTITY</span>
+                    <!-- <span class="cart-type cart-header cart-column">TYPE</span> -->
+                    <span class="cart-price cart-header cart-column">PRICE</span>
+                    
+                    
+                    <!-- <span class="cart-remove-btn cart-header cart-column"></span> -->
+
+                </div>
+                <div class="cart-items">
+                    <div class="cart-row">
+                        <div class="cart-item cart-column">
+                            <img class="cart-item-image" src="/static/products/tshirt_1706869648.png" width="100" height="100">
+                            <span class="cart-item-title">T-Shirt</span>
+                        </div>
+                        <div class="cart-item cart-column">
+                            <span class="cart-item-color">black</span>
+                        </div>
+                        <!-- <div class="cart-item cart-column">
+                            
+                        </div> -->
+                        
+                        <div class="cart-quantity cart-column">
+                            <input class="cart-quantity-input" type="number" value="1">
+                        </div>
+
+                        <div class="cart-item-price-button cart-item cart-column">
+                            <span class="cart-column cart-price-details" >$19.99</span><!--cart-price removed -->
+                            <button class=" remove-btn btn-danger" type="button">REMOVE</button>
+                        </div>
+
+                        
+                        <!-- <div class="cart-quantity cart-column">
+                           
+                        </div> -->
+                    </div>
+                    <div class="cart-row">
+                        <div class="cart-item cart-column">
+                            <img class="cart-item-image" src="/static/products/tshirt_1706870081.png" width="100" height="100">
+                            <span class="cart-item-title">T-Shirt</span>
+                        </div>
+                        <div class="cart-item cart-column">
+                            <span class="cart-item-color">white</span>
+                        </div>
+                        <!-- <div class="cart-item cart-column">
+                            
+                        </div> -->
+                        
+                        <div class="cart-quantity cart-column">
+                            <input class="cart-quantity-input" type="number" value="1">
+                        </div>
+
+                        <div class="cart-item cart-column">
+                            <span class="cart-column cart-price-details">$19.99</span> <!--cart-price removed -->
+                            <button class="remove-btn btn-danger" type="button">REMOVE</button>
+                        </div>
+
+                        
+                        <!-- <div class="cart-quantity cart-column">
+                           
+                        </div> -->
+                    </div>
             </div>
-        {% endfor %}
+                <!-- <div class="cart-items">
+                </div> -->
+                <div class="cart-total">
+                    <strong class="cart-total-title">Total</strong>
+                    <span class="cart-total-price">$0</span>
+                </div>
+                <button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>
+            </section>
+            {% for record in records %}
+            <div class="shop-items product-details">
+                <div class="shop-item">
+                    <img class="shop-item-image" src="{{ url_for('product_image', unique_id=record[0]) }}" alt="Product Image">
+                    <div class="shop-item-details">
+                        <!-- <span class="shop-item-id">productID: {{ record[0] }}</span> -->
+                        <span class="shop-item-description">Description: {{ record[1] }}</span>
+                        <span class="shop-item-price">Price: {{ record[2] }}</span>
+                        <span class="shop-item-color">color: {{ record[3] }}</span>
+                        <button class="shop-item-button" type="button">ADD TO CART</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </main>
         <footer>Footer</footer>
     </div>
