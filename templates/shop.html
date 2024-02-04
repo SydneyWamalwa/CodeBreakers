@@ -4,33 +4,85 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop</title>
-    <style>
-        /* Add some basic styling for the grid */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            justify-content: center;
-        }
 
-        .grid-item {
-            text-align: center;
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <script src="/static/js/shop.js"></script>
+    <title>Shop</title>
 </head>
-<body>
-    <h2>Shop</h2>
+<body class="">
 
     <div class="grid-container">
-        {% for record in records %}
-            <div class="grid-item">
-                <img src="{{ url_for('product_image', id=record[0]) }}" alt="Product Image" style="max-width: 100%;">
-                <p>ID: {{ record[0] }}</p>
-                <p>Description: {{ record[1] }}</p>
-                <p>Price: {{ record[2] }}</p>
+
+        <header class="p-3 text-bg-dark">
+            <div class="container-fluid d-grid gap-3 align-items-center">
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                  <a href="/landing_page" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                      <img src="static/images/popkulture-logo-black-transparent.png" alt="Your Logo" width="200" height="64">
+                  </a>
+          
+                  <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="/shop" class="nav-link px-2 text-white">Shop</a></li>
+                    <li><a href="/add_product" class="nav-link px-2 text-white">Admin</a></li>
+                  </ul>
+          
+                  <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+                    <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
+                  </form>
+          
+                  <div class="text-end">
+                    <button type="button" class="btn btn-outline-light me-2">Login</button>
+                    <button type="button" class="btn btn-outline-light me-2">Sign-up</button>
+                  </div>
+
+                  <div class="shopping">
+                    <div class="shop-cart-container">
+                        <div class="shop-cart-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z"/></svg>
+                        </div>
+                        <span class="shop-items-count">0</span>
+                    </div>
+                </div>
+
+                </div>
+              </div>
+        </header>
+
+        <main class="main">
+            <section class="container content-section cart-section">
+                <h2 class="section-header">CART</h2>
+                <div class="cart-row" id="cart-row">
+                    <span class="cart-product cart-header cart-column">PRODUCT</span>
+                    <span class="cart-color cart-header cart-column">COLOR</span>
+                    <span class="cart-quantity cart-header cart-column">QUANTITY</span>
+                    <span class="cart-price cart-header cart-column">PRICE</span>
+                </div>
+                <div class="cart-items">
+                </div>
+                <div class="cart-total">
+                    <strong class="cart-total-title">Total</strong>
+                    <span class="cart-total-price">Ksh.0</span>
+                </div>
+                <button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>
+            </section>
+            {% for record in records %}
+            <div class="shop-items product-details">
+                <div class="shop-item">
+                    <img class="shop-item-image" src="{{ url_for('product_image', unique_id=record[0]) }}" alt="Product Image">
+                    <div class="shop-item-details">
+                        <!-- <span class="shop-item-id">productID: {{ record[0] }}</span> -->
+                        <span class="shop-item-description">Description: {{ record[1] }}</span>
+                        <span class="shop-item-price">Price: {{ record[2] }}</span>
+                        <span class="shop-item-color">color: {{ record[3] }}</span>
+                        <button class="shop-item-button" id="add-to-cart-btn-id" type="button">ADD TO CART</button>
+                    </div>
+                </div>
             </div>
-        {% endfor %}
+            {% endfor %}
+        </main>
+        <footer>Footer</footer>
     </div>
 </body>
 </html>
