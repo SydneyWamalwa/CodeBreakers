@@ -51,6 +51,7 @@ function handlePayment(){
 // DomContentLoaded ensure pages isloaded before JavaScript can Execute
 document.addEventListener('DOMContentLoaded', function() {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 // DomContentLoaded ensure pages isloaded before JavaScript can Execute
@@ -82,6 +83,8 @@ document.addEventListener('DOMContentLoaded', function() {
 >>>>>>> 5e45e4c (modified cart)
 =======
 >>>>>>> d0d5b13 (modified cart)
+=======
+>>>>>>> a341b2f (modified cart)
     let iconCart = document.querySelector('.shop-cart-container');
     let body = document.querySelector('body');
     iconCart.addEventListener('click', addCartToBody)
@@ -222,6 +225,7 @@ function addCartToBody(){
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             // updateCartCount()
 =======
             updateCartCount()
@@ -231,6 +235,8 @@ function addCartToBody(){
 =======
             updateCartCount()
 >>>>>>> d0d5b13 (modified cart)
+=======
+>>>>>>> a341b2f (modified cart)
     }
 // function to update the cart total
     function updateCartTotal() {
@@ -257,6 +263,7 @@ function addCartToBody(){
         // get the cart total using its class name and change its text to above total using innertext
         document.getElementsByClassName('cart-total-price')[0].innerText = 'Ksh.' + total
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -312,6 +319,8 @@ updateCartCount()   //initialize our shopping count function
 addCartToMemory()
 
 >>>>>>> d0d5b13 (modified cart)
+=======
+>>>>>>> a341b2f (modified cart)
 
 
 

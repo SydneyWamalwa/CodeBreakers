@@ -57,6 +57,7 @@ body.showCart .cart-section{
 body.showCart .grid-container{
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     transform: translatex(-300px);
 =======
     transform: translateX(-300px);
@@ -68,6 +69,12 @@ body.showCart .grid-container{
 =======
     transform: translateX(-300px);
 >>>>>>> d0d5b13 (modified cart)
+=======
+    transform: translatex(-300px);
+=======
+    transform: translateX(-300px);
+>>>>>>> 20b025a (modified cart)
+>>>>>>> a341b2f (modified cart)
     transition: transform .5s ease-out;
 }
 .section-header{
