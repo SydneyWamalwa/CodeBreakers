@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
             carts = JSON.parse(localStorage.getItem('cart'))
             updateCartTotal()
             updateCartCount()
+            addCartToMemory()
         }
     })
 
@@ -144,7 +145,7 @@ function addCartToBody(){
         var buttonClicked = event.target
             buttonClicked.parentElement.parentElement.remove()
             updateCartTotal()
-            updateCartCount()
+            // updateCartCount()
     }
 // function to update the cart total
     function updateCartTotal() {
@@ -172,7 +173,7 @@ function addCartToBody(){
         document.getElementsByClassName('cart-total-price')[0].innerText = 'Ksh.' + total
     }
 updateCartCount()   //initialize our shopping count function
-addCartToMemory()
+
 
 
 
