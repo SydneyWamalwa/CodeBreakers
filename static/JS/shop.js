@@ -2,10 +2,13 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 430d6ab (shop ongoing payments)
 =======
 >>>>>>> d696e47 (shop ongoing payments)
+=======
+>>>>>>> 34afa80 (modified cart)
 function handlePayment(){
     // Retrieve product details
     var userEmail = 'customer@example.com'; // Get customer's email from your application
@@ -47,15 +50,21 @@ function handlePayment(){
 }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> d0d5b13 (modified cart)
 =======
 >>>>>>> 430d6ab (shop ongoing payments)
 =======
 >>>>>>> d696e47 (shop ongoing payments)
+=======
+=======
+>>>>>>> d0d5b13 (modified cart)
+>>>>>>> 34afa80 (modified cart)
 
 // DomContentLoaded ensure pages isloaded before JavaScript can Execute
 document.addEventListener('DOMContentLoaded', function() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -64,30 +73,10 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
 >>>>>>> d0d5b13 (modified cart)
 
+=======
+=======
 
-// event listner to process paymentonce proceed to purchase button is clicked
-    document.getElementById('purchaseBtn').addEventListener('click', function () {
-        // Display the payment modal when the button is clicked
-        openPaymentModal();
-    });
-
-
-
-
-
-
-    // window.addEventListener('load', function () {
-    //     if (localStorage.getItem('cart')){
-    //         carts = JSON.parse(localStorage.getItem('cart'))
-    //         updateCartTotal()
-    //         updateCartCount()
-    //     }
-    // })
-
-
-
-    //function toggle cart when shopping cart icon is clicked
-
+>>>>>>> 34afa80 (modified cart)
     var carts = []
     window.addEventListener('load', function () {
         if (localStorage.getItem('cart')){
@@ -96,11 +85,17 @@ document.addEventListener('DOMContentLoaded', function() {
             updateCartCount()
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             addCartToMemory()
 =======
 >>>>>>> d0d5b13 (modified cart)
 =======
 >>>>>>> d0d5b13 (modified cart)
+=======
+            addCartToMemory()
+=======
+>>>>>>> d0d5b13 (modified cart)
+>>>>>>> 34afa80 (modified cart)
         }
     })
 
@@ -109,12 +104,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // show the cart contents anytime the shopping cart icon is clicked
     //function toggle cart when shopping cart icon is clicked
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 5e45e4c (modified cart)
 =======
 >>>>>>> d0d5b13 (modified cart)
 =======
 >>>>>>> a341b2f (modified cart)
+=======
+>>>>>>> 10340d9 (modified cart)
+>>>>>>> 34afa80 (modified cart)
     let iconCart = document.querySelector('.shop-cart-container');
     let body = document.querySelector('body');
     iconCart.addEventListener('click', addCartToBody)
@@ -182,6 +181,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 =======
 >>>>>>> d696e47 (shop ongoing payments)
+
+
+
 
 
 
@@ -286,10 +288,15 @@ function addCartToBody(){
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+=======
+=======
+>>>>>>> 34afa80 (modified cart)
+<<<<<<< HEAD
             // updateCartCount()
 =======
             updateCartCount()
 >>>>>>> d0d5b13 (modified cart)
+<<<<<<< HEAD
 =======
 >>>>>>> 5e45e4c (modified cart)
 =======
@@ -297,6 +304,9 @@ function addCartToBody(){
 >>>>>>> d0d5b13 (modified cart)
 =======
 >>>>>>> a341b2f (modified cart)
+=======
+>>>>>>> 10340d9 (modified cart)
+>>>>>>> 34afa80 (modified cart)
     }
 // function to update the cart total
     function updateCartTotal() {
@@ -333,11 +343,15 @@ updateCartCount()   //initialize our shopping count function
 =======
 =======
 updateCartCount()   //initialize our shopping count function
+<<<<<<< HEAD
 >>>>>>> 430d6ab (shop ongoing payments)
 =======
 =======
 updateCartCount()   //initialize our shopping count function
 >>>>>>> d696e47 (shop ongoing payments)
+=======
+<<<<<<< HEAD
+>>>>>>> 34afa80 (modified cart)
 
 
 function initiatePayment(price) {
@@ -370,6 +384,7 @@ function initiatePayment(price) {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 addCartToMemory()
 >>>>>>> d0d5b13 (modified cart)
@@ -377,6 +392,11 @@ addCartToMemory()
 =======
 >>>>>>> 5e45e4c (modified cart)
 =======
+=======
+=======
+addCartToMemory()
+>>>>>>> d0d5b13 (modified cart)
+>>>>>>> 34afa80 (modified cart)
 
 >>>>>>> 3944efa (shop ongoing payments)
 >>>>>>> 430d6ab (shop ongoing payments)
