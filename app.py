@@ -128,6 +128,20 @@ def product_image(id):
     image = cursor.fetchone()[0]
     return send_file(BytesIO(image), mimetype='image/jpeg')
 
+@app.route('/landing_page')
+def blog():
+    # You can pass data to your template if needed
+    blog_data = {
+        'title': 'My Blog',
+        'posts': [
+            {'title': 'Post 1', 'content': 'Content for post 1'},
+            {'title': 'Post 2', 'content': 'Content for post 2'},
+            # Add more posts as needed
+        ]
+    }
+
+    return render_template('landing.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
