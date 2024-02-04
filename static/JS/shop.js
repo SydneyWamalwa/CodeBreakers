@@ -67,7 +67,12 @@ document.addEventListener('DOMContentLoaded', function() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+>>>>>>> 00d14a5 (modified cart)
+=======
+=======
+>>>>>>> 021eec1 (modified cart)
 
 // DomContentLoaded ensure pages isloaded before JavaScript can Execute
 document.addEventListener('DOMContentLoaded', function() {
@@ -105,6 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
     //function toggle cart when shopping cart icon is clicked
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 5e45e4c (modified cart)
 =======
@@ -114,6 +120,13 @@ document.addEventListener('DOMContentLoaded', function() {
 =======
 >>>>>>> 10340d9 (modified cart)
 >>>>>>> 34afa80 (modified cart)
+=======
+>>>>>>> 10340d9 (modified cart)
+=======
+=======
+>>>>>>> 5e45e4c (modified cart)
+>>>>>>> 021eec1 (modified cart)
+>>>>>>> 00d14a5 (modified cart)
     let iconCart = document.querySelector('.shop-cart-container');
     let body = document.querySelector('body');
     iconCart.addEventListener('click', addCartToBody)
@@ -288,14 +301,21 @@ function addCartToBody(){
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> 34afa80 (modified cart)
+=======
+=======
+=======
+>>>>>>> 021eec1 (modified cart)
+>>>>>>> 00d14a5 (modified cart)
 <<<<<<< HEAD
             // updateCartCount()
 =======
             updateCartCount()
 >>>>>>> d0d5b13 (modified cart)
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 >>>>>>> 5e45e4c (modified cart)
@@ -307,6 +327,13 @@ function addCartToBody(){
 =======
 >>>>>>> 10340d9 (modified cart)
 >>>>>>> 34afa80 (modified cart)
+=======
+>>>>>>> 10340d9 (modified cart)
+=======
+=======
+>>>>>>> 5e45e4c (modified cart)
+>>>>>>> 021eec1 (modified cart)
+>>>>>>> 00d14a5 (modified cart)
     }
 // function to update the cart total
     function updateCartTotal() {
@@ -338,10 +365,15 @@ function addCartToBody(){
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 updateCartCount()   //initialize our shopping count function
 <<<<<<< HEAD
 =======
 =======
+>>>>>>> 00d14a5 (modified cart)
+=======
+=======
+>>>>>>> 021eec1 (modified cart)
 updateCartCount()   //initialize our shopping count function
 <<<<<<< HEAD
 >>>>>>> 430d6ab (shop ongoing payments)
@@ -389,6 +421,7 @@ function initiatePayment(price) {
 addCartToMemory()
 >>>>>>> d0d5b13 (modified cart)
 
+<<<<<<< HEAD
 =======
 >>>>>>> 5e45e4c (modified cart)
 =======
@@ -411,6 +444,14 @@ addCartToMemory()
 
 >>>>>>> 3944efa (shop ongoing payments)
 >>>>>>> d696e47 (shop ongoing payments)
+=======
+<<<<<<< HEAD
+>>>>>>> 3944efa (shop ongoing payments)
+=======
+=======
+>>>>>>> 5e45e4c (modified cart)
+>>>>>>> 021eec1 (modified cart)
+>>>>>>> 00d14a5 (modified cart)
 
 
 
