@@ -1,0 +1,22 @@
+/* styles.css */
+
+.form-control::placeholder {
+    color: white;
+}
+
+/* body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+} */
+
+header.p-3.text-bg-dark  {
+    background: linear-gradient(109.6deg, rgb(6, 2, 2) 32.4%, rgb(255, 43, 0) 98.8%) !important;
+}
+
+.text-stroke {
+    -webkit-text-stroke: 1px black; /* For webkit browsers (Chrome, Safari) */
+    text-stroke: 1px black; /* Standard property */
+    color: white; /* Set the text color */
+}
+
+
+/* Add more styles as needed */
