@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 function handlePayment(){
     // Retrieve product details
     var userEmail = 'customer@example.com'; // Get customer's email from your application
@@ -37,6 +38,8 @@ function handlePayment(){
         console.error('Error saving purchased product details:', error);
     });
 }
+=======
+>>>>>>> d0d5b13 (modified cart)
 
 // DomContentLoaded ensure pages isloaded before JavaScript can Execute
 document.addEventListener('DOMContentLoaded', function() {
@@ -47,7 +50,10 @@ document.addEventListener('DOMContentLoaded', function() {
             carts = JSON.parse(localStorage.getItem('cart'))
             updateCartTotal()
             updateCartCount()
+<<<<<<< HEAD
             addCartToMemory()
+=======
+>>>>>>> d0d5b13 (modified cart)
         }
     })
 
@@ -92,6 +98,9 @@ document.addEventListener('DOMContentLoaded', function() {
         var cartButton = addToCartButtons[i]
         cartButton.addEventListener('click', addToCart)
     }
+
+
+
 
 
 
@@ -183,7 +192,11 @@ function addCartToBody(){
         var buttonClicked = event.target
             buttonClicked.parentElement.parentElement.remove()
             updateCartTotal()
+<<<<<<< HEAD
             // updateCartCount()
+=======
+            updateCartCount()
+>>>>>>> d0d5b13 (modified cart)
     }
 // function to update the cart total
     function updateCartTotal() {
@@ -211,6 +224,7 @@ function addCartToBody(){
         document.getElementsByClassName('cart-total-price')[0].innerText = 'Ksh.' + total
     }
 updateCartCount()   //initialize our shopping count function
+<<<<<<< HEAD
 
 
 function initiatePayment(price) {
@@ -241,6 +255,9 @@ function initiatePayment(price) {
     handler.openIframe();
 }
 
+=======
+addCartToMemory()
+>>>>>>> d0d5b13 (modified cart)
 
 
 
