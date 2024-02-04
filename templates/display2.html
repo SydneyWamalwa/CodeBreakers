@@ -4,10 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Display Product</title>
+    <style>
+        h1{
+            text-align: center;
+        }
+        body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
 </head>
 <body>
     <!-- Display other product details here -->
-
+<h1>Your Purchase</h1>
     <!-- Display the actual screenshot -->
     {% if screenshot_path %}
         <img src="{{ url_for('display_purchased_image', product_id=product_id) }}" alt="Screenshot">
