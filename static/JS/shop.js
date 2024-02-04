@@ -1,25 +1,53 @@
-//function toggle cart when shopping cart icon is clicked
+
 // DomContentLoaded ensure pages isloaded before JavaScript can Execute
 document.addEventListener('DOMContentLoaded', function() {
+
+    var carts = []
+    window.addEventListener('load', function () {
+        if (localStorage.getItem('cart')){
+            carts = JSON.parse(localStorage.getItem('cart'))
+            updateCartTotal()
+            updateCartCount()
+            addCartToMemory()
+        }
+    })
+
+
+
+    // show the cart contents anytime the shopping cart icon is clicked
+    //function toggle cart when shopping cart icon is clicked
     let iconCart = document.querySelector('.shop-cart-container');
     let body = document.querySelector('body');
+    iconCart.addEventListener('click', addCartToBody)
 
-    iconCart.addEventListener('click', () => {
-        body.classList.toggle('showCart');
-    });
-
-    // removing items from cart
+    // removing items from cart event listener
     var removeCartItemButtons = document.getElementsByClassName('remove-btn') // loop over all buttons in the cart and add an event listner for whatever index the button is currently on
     for (i = 0; i < removeCartItemButtons.length; i++) {
         var button = removeCartItemButtons[i]
         button.addEventListener('click', removeCartItem) //call the function on a click event
 }
+
+// quantity change event lister
 // update total when quantity value changes by listening for change event
     var quantityInputs = document.getElementsByClassName('cart-quantity-input')
     for (i = 0; i < quantityInputs.length; i++) {
         var input = quantityInputs[i]
         input.addEventListener('change', quantityChanged) //call a change function on cart-quantity-input class
     }
+
+    // This function uses the quantity input variable in line 18 to get quantityInputs
+    // function to update the number inside the shopping cart with total number of products everytime the quanity changes.
+    function updateCartCount(){
+        // var quantityInputs = document.getElementsByClassName('cart-quantity-input')
+        var totalCount= 0
+        for (var i = 0; i < quantityInputs.length; i++ ){             // loop over all the quantity rows in quantity and increase total with whatever the current quantity for the row is
+            totalCount += parseInt(quantityInputs[i].value)
+        }
+        document.querySelector('.shop-items-count').innerText = totalCount
+    }
+
+
+// add to cart event listner
     var addToCartButtons = document.getElementsByClassName('shop-item-button')
     for (i = 0; i < addToCartButtons.length; i++) {
         var cartButton = addToCartButtons[i]
@@ -28,6 +56,9 @@ document.addEventListener('DOMContentLoaded', function() {
 // alert user when purchase button is clicked and clear the cart
     document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseComplete)
 
+
+
+
 function purchaseComplete(){
     alert('Thank you for your purchase')
     var cartItems = document.getElementsByClassName('cart-items')[0]  //get all rows from our cart-items class
@@ -35,7 +66,12 @@ function purchaseComplete(){
         cartItems.removeChild(cartItems.firstChild)
     }
     updateCartTotal()   //update total once everything is removed from cart
+    updateCartCount() //update cart count
 
+}
+//function toggle cart when shopping cart icon is clicked
+function addCartToBody(){
+    body.classList.toggle('showCart');     //use this class in css to style
 }
 
 
@@ -48,8 +84,13 @@ function purchaseComplete(){
         var title = shopItem.getElementsByClassName('shop-item-description')[0].innerText.replace('Description:', '')
         var price = shopItem.getElementsByClassName('shop-item-price')[0].innerText.replace('Price:', '')
         var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src //get the omage source for our images
+        carts.push({title: title, price: price, imageSrc: imageSrc})
         addItemToCart(title, price, imageSrc)
         updateCartTotal()
+        addCartToMemory()
+    }
+    const addCartToMemory = () => {
+        localStorage.setItem('cart', JSON.stringify(carts))
     }
 // add items for purchase to cart
     function addItemToCart(title, price, imageSrc){
@@ -84,6 +125,7 @@ function purchaseComplete(){
         cartRow.innerHTML = cartRowContents  // call innerHTML method since we are passing actual HTML tags
         cartItems.appendChild(cartRow) //add the new row to cart-items element
         // our DOMContentLoaded only recognize events that were there when page was first loaded. any buttons added after that wont work. we add another click event to remove the newly added rows from our cart
+        updateCartCount()
 
         cartRow.getElementsByClassName('remove-btn')[0].addEventListener('click', removeCartItem)
         // change quantity when new row's quantity changes
@@ -96,12 +138,14 @@ function purchaseComplete(){
             input.value = 1
         }
         updateCartTotal() //change the total cost depending on quantity change
+        updateCartCount() //call the update cart function when the quantity changes.
     }
 // function to remove item from the cart
     function removeCartItem(event) {
         var buttonClicked = event.target
             buttonClicked.parentElement.parentElement.remove()
             updateCartTotal()
+            // updateCartCount()
     }
 // function to update the cart total
     function updateCartTotal() {
@@ -128,6 +172,9 @@ function purchaseComplete(){
         // get the cart total using its class name and change its text to above total using innertext
         document.getElementsByClassName('cart-total-price')[0].innerText = 'Ksh.' + total
     }
+updateCartCount()   //initialize our shopping count function
+
+
 
 
 
