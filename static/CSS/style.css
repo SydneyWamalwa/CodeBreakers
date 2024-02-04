@@ -78,10 +78,7 @@ body.showCart .grid-container{
     margin-top: -15px;
     left: 190px;
 }
-.shop-cart-link.clicked + .cart-section {
-    /* display: block; */
-    /* Add styling for the clicked state */
-}
+
 
 .cart-column {
 
