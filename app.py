@@ -120,11 +120,12 @@ def shop_display():
     cursor.execute("SELECT * FROM products")
     records = cursor.fetchall()
     return render_template('shop.html', records=records)
-@app.route('/product_image/<int:id>')
-def product_image(id):
+
+@app.route('/product_image/<string:unique_id>')
+def product_image(unique_id):
     db = get_db()
     cursor = db.cursor()
-    cursor.execute("SELECT image FROM products WHERE id = ?", (id,))
+    cursor.execute("SELECT image FROM products WHERE unique_id = ?", (unique_id,))
     image = cursor.fetchone()[0]
     return send_file(BytesIO(image), mimetype='image/jpeg')
 
