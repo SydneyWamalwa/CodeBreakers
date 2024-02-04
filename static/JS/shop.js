@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 function handlePayment(){
     // Retrieve product details
     var userEmail = 'customer@example.com'; // Get customer's email from your application
@@ -37,78 +38,8 @@ function handlePayment(){
         console.error('Error saving purchased product details:', error);
     });
 }
-
-// load the paystack api outside the DOM to ensure their scope is global and can be accessed from anywhere in the code.
-function openPaymentModal() {
-var modal = document.getElementById('paymentModal');
-modal.style.display = 'block';
-}
-                                                                            /*this two functions are responsible for the email popup display*/
-function closePaymentModal() {
-var modal = document.getElementById('paymentModal');
-modal.style.display = 'none';
-}
-
-function processPayment() {
-// Get the email entered by the user
-var userEmail = document.getElementById('email').value;
-
-// Close the payment modal
-closePaymentModal()
-// Make an AJAX request to Flask to generate a unique reference
-fetch('/generate-reference', {                                                              //this is used to create a unique id for each transaction
-    method: 'POST'
-})
-.then(response => response.json())
-.then(data => {
-    // Use the fetched reference number to make the payment through the Paystack API
-    var reference = data.reference;
-
-    // Perform payment processing logic using Paystack API and the total amount
-    var totalAmount = parseFloat(document.querySelector('.cart-total-price').innerText.replace('Ksh.', '').trim());
-    console.log(totalAmount)
-
-    // Now you can use the userEmail, totalAmount, and reference to make the payment through the Paystack API
-    var paystackPayload = {
-        key: 'pk_test_72adfba481a29bf8d587280ca7d96002ac4210c4', // Your test public key
-        email: userEmail,
-        amount: totalAmount * 100, // Amount must be in kobo
-        currency: 'KES',
-        ref: reference, // Use the fetched reference number
-        metadata: {
-            custom_fields: [
-                {
-                    display_name: 'Cart Total',
-                    variable_name: 'cart_total',
-                    value: totalAmount
-                }
-            ]
-        },
-        callback: function(response) {
-            console.log(response);
-            alert('Payment Successful');
-            // handle further actions here, such as updating order status
-        },
-        onClose: function () {
-            alert('Payment window closed without completion');
-        }
-    };
-
-    // Initialize Paystack with the payload
-    var handler = PaystackPop.setup(paystackPayload);
-    handler.openIframe();
-})
-.catch(error => console.error('Error:', error));
-}
-
-
-// Validate email function
-function validateEmail(email) {
-var regex = /\S+@\S+\.\S+/;
-return regex.test(email);
-}
-
-
+=======
+>>>>>>> d0d5b13 (modified cart)
 
 // DomContentLoaded ensure pages isloaded before JavaScript can Execute
 document.addEventListener('DOMContentLoaded', function() {
@@ -143,6 +74,10 @@ document.addEventListener('DOMContentLoaded', function() {
             carts = JSON.parse(localStorage.getItem('cart'))
             updateCartTotal()
             updateCartCount()
+<<<<<<< HEAD
+            addCartToMemory()
+=======
+>>>>>>> d0d5b13 (modified cart)
         }
     })
 
@@ -204,6 +139,9 @@ document.addEventListener('DOMContentLoaded', function() {
         var cartButton = addToCartButtons[i]
         cartButton.addEventListener('click', addToCart)
     }
+
+
+
 
 
 
@@ -305,8 +243,11 @@ function addCartToBody(){
         var buttonClicked = event.target
             buttonClicked.parentElement.parentElement.remove()
             updateCartTotal()
+<<<<<<< HEAD
             // updateCartCount()
+=======
             updateCartCount()
+>>>>>>> d0d5b13 (modified cart)
     }
 // function to update the cart total
     function updateCartTotal() {
@@ -334,8 +275,8 @@ function addCartToBody(){
         document.getElementsByClassName('cart-total-price')[0].innerText = 'Ksh.' + total
     }
 updateCartCount()   //initialize our shopping count function
-updateCartCount()   //initialize our shopping count function
-addCartToMemory()
+<<<<<<< HEAD
+
 
 function initiatePayment(price) {
     // Use Paystack API to initiate payment
@@ -365,6 +306,9 @@ function initiatePayment(price) {
     handler.openIframe();
 }
 
+=======
+addCartToMemory()
+>>>>>>> d0d5b13 (modified cart)
 
 
 
