@@ -107,6 +107,10 @@
             margin-top: 20px;
         }
 
+        .button-container button{
+            margin: 10px;
+        }
+
         button {
             background-color: #4caf50;
             color: #fff;
@@ -177,6 +181,36 @@ nav a:hover {
             margin-left: 20px;
             display: flex;
         }
+
+        .popup-container {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+    }
+
+    .popup-content {
+        text-align: center;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        font-size: 20px;
+        color: #555;
+    }
+
+    .close:hover {
+        color: red;
+    }
     </style>
 </head>
 
@@ -229,12 +263,26 @@ nav a:hover {
         </div>
     </div>
 
+    <div id="purchasePopup" class="popup-container">
+        <div class="popup-content">
+            <span class="close" onclick="closePurchasePopup()">&times;</span>
+            <form id="emailForm">
+                <label for="userEmailInput">Enter your email:</label>
+                <input type="email" id="userEmailInput" required>
+                <button type="button" onclick="initiatePayment()">Continue to Purchase</button>
+            </form>
+        </div>
+    </div>
+
     <div class="button-container">
         <button onclick="saveCustomDesign()" type="button">Save Custom Design</button>
+        <button onclick="showPurchasePopup()" type="button">Purchase</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/dragula/dist/dragula.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+
 
     <script>
 
@@ -373,6 +421,72 @@ nav a:hover {
             }
         });
 
+
+        //payment script
+        //Email popup script
+        function showPurchasePopup() {
+        const purchasePopup = document.getElementById('purchasePopup');
+        purchasePopup.style.display = 'block';
+    }
+
+    function closePurchasePopup() {
+        const purchasePopup = document.getElementById('purchasePopup');
+        purchasePopup.style.display = 'none';
+    }
+
+    function getUserEmail() {
+        const userEmailInput = document.getElementById('userEmailInput');
+        return userEmailInput.value;
+    }
+//paystack code
+    function initiatePayment() {
+        const userEmail = getUserEmail();
+
+        // Replace 'your_public_key' with your actual Paystack public key
+        const publicKey = 'your_public_key';
+        const amountInKobo = 1500 * 100; // Set the price to Ksh.1500
+
+        // Initialize Paystack
+        const handler = PaystackPop.setup({
+            key: publicKey,
+            email: userEmail,
+            amount: amountInKobo,
+            currency: 'KES',
+            ref: 'pay_' + Date.now(),
+            callback: function (response) {
+                console.log('Payment successful. Transaction reference: ' + response.reference);
+                savePurchasedProduct(userEmail, 1500);
+            },
+            onClose: function () {
+                console.log('Payment closed without completing.');
+            }
+        });
+
+        handler.openIframe();
+    }
+
+
+//saving purchase script
+    function savePurchasedProduct(userEmail, price) {
+        fetch('/save_purchased_product', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                userEmail: userEmail,
+                price: price,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('T-shirt details saved:', data);
+            // Optionally handle the response from the server
+        })
+        .catch(error => {
+            console.error('Error saving T-shirt details:', error);
+        });
+    }
 
     </script>
 </div>
