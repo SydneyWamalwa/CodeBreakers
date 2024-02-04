@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 430d6ab (shop ongoing payments)
 function handlePayment(){
@@ -50,6 +51,11 @@ function handlePayment(){
 // DomContentLoaded ensure pages isloaded before JavaScript can Execute
 document.addEventListener('DOMContentLoaded', function() {
 <<<<<<< HEAD
+=======
+
+// DomContentLoaded ensure pages isloaded before JavaScript can Execute
+document.addEventListener('DOMContentLoaded', function() {
+>>>>>>> d0d5b13 (modified cart)
 
     var carts = []
     window.addEventListener('load', function () {
@@ -58,7 +64,10 @@ document.addEventListener('DOMContentLoaded', function() {
             updateCartTotal()
             updateCartCount()
 <<<<<<< HEAD
+<<<<<<< HEAD
             addCartToMemory()
+=======
+>>>>>>> d0d5b13 (modified cart)
 =======
 >>>>>>> d0d5b13 (modified cart)
         }
@@ -68,8 +77,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // show the cart contents anytime the shopping cart icon is clicked
     //function toggle cart when shopping cart icon is clicked
+<<<<<<< HEAD
 =======
 >>>>>>> 5e45e4c (modified cart)
+=======
+>>>>>>> d0d5b13 (modified cart)
     let iconCart = document.querySelector('.shop-cart-container');
     let body = document.querySelector('body');
     iconCart.addEventListener('click', addCartToBody)
@@ -114,6 +126,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 =======
 >>>>>>> 430d6ab (shop ongoing payments)
+
+
+
 
 
 
@@ -206,12 +221,16 @@ function addCartToBody(){
             updateCartTotal()
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             // updateCartCount()
 =======
             updateCartCount()
 >>>>>>> d0d5b13 (modified cart)
 =======
 >>>>>>> 5e45e4c (modified cart)
+=======
+            updateCartCount()
+>>>>>>> d0d5b13 (modified cart)
     }
 // function to update the cart total
     function updateCartTotal() {
@@ -238,6 +257,7 @@ function addCartToBody(){
         // get the cart total using its class name and change its text to above total using innertext
         document.getElementsByClassName('cart-total-price')[0].innerText = 'Ksh.' + total
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 updateCartCount()   //initialize our shopping count function
@@ -287,6 +307,11 @@ addCartToMemory()
 
 >>>>>>> 3944efa (shop ongoing payments)
 >>>>>>> 430d6ab (shop ongoing payments)
+=======
+updateCartCount()   //initialize our shopping count function
+addCartToMemory()
+
+>>>>>>> d0d5b13 (modified cart)
 
 
 
