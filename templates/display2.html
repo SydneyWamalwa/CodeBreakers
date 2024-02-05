@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Product</title>
+</head>
+<body>
+    <!-- Display other product details here -->
+
+    <!-- Display the actual screenshot -->
+    {% if screenshot_path %}
+        <img src="{{ url_for('display_purchased_image', product_id=product_id) }}" alt="Screenshot">
+    {% else %}
+        <p>No screenshot available</p>
+    {% endif %}
+    <p>Your Email:{{ user_email }}</p>
+    <p>Selected Size:{{ size }}</p>
+    <p>Selected Color:{{ color_option }}</p>
+    <p>Price:{{ price }}</p>
+</body>
+</html>

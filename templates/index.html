@@ -229,8 +229,8 @@ nav a:hover {
         <div id="color-options">
             <h2>Color-Options</h2>
             <div>
-            <button onclick="changeShirtColor('/static/images/wt.jpeg', 'White')" class="btn"><img src="/static/images/wt.jpeg" alt="White T-Shirt" width="60px" height="60px"></button>
-            <button onclick="changeShirtColor('/static/images/blt.jpeg', 'Black')" class="btn"><img src="/static/images/blt.jpeg" alt="Black T-Shirt" width="60px" height="60px"></button>
+            <button data-color-option="White" onclick="changeShirtColor('/static/images/wt.jpeg', 'White')" class="btn"><img src="/static/images/wt.jpeg" alt="White T-Shirt" width="60px" height="60px"></button>
+            <button data-color-option="Black" onclick="changeShirtColor('/static/images/blt.jpeg', 'Black')" class="btn"><img src="/static/images/blt.jpeg" alt="Black T-Shirt" width="60px" height="60px"></button>
             <!-- Add more color options as needed -->
         </div>
             <div>
@@ -265,10 +265,17 @@ nav a:hover {
 
     <div id="purchasePopup" class="popup-container">
         <div class="popup-content">
+            <!-- Inside the popup-content div -->
+<div id="selectedColorDisplay" style="width: 30px; height: 30px; border: 1px solid #ccc; margin-top: 5px;"></div>
+
             <span class="close" onclick="closePurchasePopup()">&times;</span>
             <form id="emailForm">
                 <label for="userEmailInput">Enter your email:</label>
                 <input type="email" id="userEmailInput" required>
+                <input type="hidden" id="size">
+                <!-- Inside the popup-content div -->
+                <label for="colorPicker">Select Color:</label>
+                <input type="color" id="colorPicker" value="#ffffff" onchange="updateSelectedColor(this.value)">
                 <button type="button" onclick="initiatePayment()">Continue to Purchase</button>
             </form>
         </div>
@@ -438,55 +445,152 @@ nav a:hover {
         const userEmailInput = document.getElementById('userEmailInput');
         return userEmailInput.value;
     }
-//paystack code
-    function initiatePayment() {
-        const userEmail = getUserEmail();
 
-        // Replace 'your_public_key' with your actual Paystack public key
-        const publicKey = 'your_public_key';
-        const amountInKobo = 1500 * 100; // Set the price to Ksh.1500
-
-        // Initialize Paystack
-        const handler = PaystackPop.setup({
-            key: publicKey,
-            email: userEmail,
-            amount: amountInKobo,
-            currency: 'KES',
-            ref: 'pay_' + Date.now(),
-            callback: function (response) {
-                console.log('Payment successful. Transaction reference: ' + response.reference);
-                savePurchasedProduct(userEmail, 1500);
-            },
-            onClose: function () {
-                console.log('Payment closed without completing.');
-            }
-        });
-
-        handler.openIframe();
+    // Function to get the selected size
+function getSelectedSize() {
+    const sizeButtons = document.querySelectorAll('.sizes p');
+    for (const button of sizeButtons) {
+        if (button.classList.contains('selected')) {
+            return button.innerText;
+        }
     }
+    // Return a default size or handle the case where no size is selected
+    return 'Medium';
+}
 
 
-//saving purchase script
-    function savePurchasedProduct(userEmail, price) {
-        fetch('/save_purchased_product', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                userEmail: userEmail,
-                price: price,
-            }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('T-shirt details saved:', data);
-            // Optionally handle the response from the server
+// Function to handle size button click
+function handleSizeButtonClick(button) {
+    const sizeButtons = document.querySelectorAll('.sizes p');
+    for (const sizeButton of sizeButtons) {
+        sizeButton.classList.remove('selected');
+    }
+    button.classList.add('selected');
+}
+
+// Attach event listeners to size buttons
+const sizeButtons = document.querySelectorAll('.sizes p');
+for (const sizeButton of sizeButtons) {
+    sizeButton.addEventListener('click', function () {
+        handleSizeButtonClick(this);
+    });}
+
+       // Function to capture the canvas screenshot
+function captureCanvasScreenshot() {
+    const canvasContainer = document.getElementById('canvas-container');
+
+    return domtoimage.toPng(canvasContainer)
+        .then(dataUrl => {
+            return dataUrl;
         })
         .catch(error => {
-            console.error('Error saving T-shirt details:', error);
+            console.error('Error capturing canvas content:', error);
+            return null;
         });
+}
+
+// Modified initiatePayment function
+// Function to get the selected color from the color picker
+function getSelectedColor() {
+    const colorPicker = document.getElementById('colorPicker');
+    return colorPicker.value;
+}
+
+// Modified initiatePayment function
+function initiatePayment() {
+    const userEmail = getUserEmail();
+    const selectedSize = getSelectedSize();
+    const selectedColor = getSelectedColor();
+
+    if (selectedColor) {
+        // Capture canvas screenshot before initiating payment
+        captureCanvasScreenshot().then(screenshotUrl => {
+            const imageUrl = getSelectedImageUrl();
+
+            const publicKey = 'pk_test_72adfba481a29bf8d587280ca7d96002ac4210c4';
+            const amountInKobo = 1500 * 100;
+
+            const handler = PaystackPop.setup({
+                key: publicKey,
+                email: userEmail,
+                amount: amountInKobo,
+                currency: 'KES',
+                ref: 'pay_' + Date.now(),
+                callback: function (response) {
+                    console.log('Payment successful. Transaction reference: ' + response.reference);
+
+                    // Save purchased product details to the server
+                    savePurchasedProduct(userEmail, selectedSize, selectedColor, imageUrl, screenshotUrl);
+
+                    showPurchasePopup();
+                },
+                onClose: function () {
+                    console.log('Payment closed without completing.');
+                }
+            });
+
+            handler.openIframe();
+        });
+    } else {
+        console.error('Color option not selected');
     }
+}
+
+    // Function to update the selected color
+function updateSelectedColor(color) {
+    const selectedColorDisplay = document.getElementById('selectedColorDisplay');
+    selectedColorDisplay.style.backgroundColor = color;
+}
+
+// Function to save purchased product details
+// Function to save purchased product details
+function savePurchasedProduct(userEmail, size, colorOption, imageUrl, screenshotUrl) {
+    const colorCode = getSelectedColor();
+    // Send data to the server using Fetch API
+    fetch('/save_purchased_product', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            user_email: userEmail,
+            size: size,
+            color_option: colorOption,
+            color_code: colorCode,
+            image_url: imageUrl,
+            screenshot_url: screenshotUrl,
+            price: 1500, // Assuming a fixed price for the T-shirt
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Server response:', data);
+        if (data.status === 'success') {
+            // Redirect to display2 page with the product ID
+            window.location.href = `/display2/${data.product_id}`;  // Assuming your response includes the product_id
+        } else {
+            console.error('Error saving purchased product details:', data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error sending data to the server:', error);
+    });
+}
+
+
+// Function to get the selected image URL
+function getSelectedImageUrl() {
+    const tshirt = document.getElementById('tshirt');
+    const backgroundImage = window.getComputedStyle(tshirt).backgroundImage;
+
+    // Extract the URL from the 'url("...")' string
+    const imageUrl = backgroundImage.slice(5, -2);
+
+    return imageUrl;
+}
+
+
+
 
     </script>
 </div>
