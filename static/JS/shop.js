@@ -1,3 +1,42 @@
+function handlePayment(){
+    // Retrieve product details
+    var userEmail = 'customer@example.com'; // Get customer's email from your application
+    var description = title; // Example: Get selected size from your application
+    var image = imageSrc; // Example: Get image URL from your application
+
+    // Amount should be calculated based on product price and quantity
+    var price = total; // Example: Get product price from your application
+
+    // Prepare data to send to backend
+    var data = {
+        user_email: userEmail,
+        image: image,
+        price: price,
+        description: description
+    };
+
+    // Make a POST request to the backend to initiate payment processing
+    fetch('/shop_purchased_product', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // Proceed to initiate payment using Paystack popup
+            initiatePayment(data.price, data.image, data.description,data.user_email);
+        } else {
+            // Handle error
+            console.error('Failed to save purchased product details:', data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error saving purchased product details:', error);
+    });
+}
 
 // DomContentLoaded ensure pages isloaded before JavaScript can Execute
 document.addEventListener('DOMContentLoaded', function() {
@@ -53,8 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var cartButton = addToCartButtons[i]
         cartButton.addEventListener('click', addToCart)
     }
-// alert user when purchase button is clicked and clear the cart
-    document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseComplete)
+
 
 
 
@@ -151,18 +189,18 @@ function addCartToBody(){
     function updateCartTotal() {
     // cart-items is the container class for all our rows. access it and get the very first element from the list[0]
         var cartItemContainer = document.getElementsByClassName('cart-items')[0]
-        
+
         // inside items class get all the rows
         var cartRows = cartItemContainer.getElementsByClassName('cart-row')
         total = 0
         // loop over cart-rows. we only need quantity and price columns
         for (i = 0; i < cartRows.length; i++) {
             var cartRow = cartRows[i] //get a single row from the item rows
-        
+
             // get the price and quantity elements from the row using their class names. get the very first one.
             var priceElement = cartRow.getElementsByClassName('cart-price-details')[0]
             var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0]
-            
+
             // extract the text from an element using innertext. use replace to get rid of currency and float to convert to number
             var price = parseFloat(priceElement.innerText.replace('Ksh.', ''))
             var quantity = quantityElement.value
@@ -173,6 +211,35 @@ function addCartToBody(){
         document.getElementsByClassName('cart-total-price')[0].innerText = 'Ksh.' + total
     }
 updateCartCount()   //initialize our shopping count function
+
+
+function initiatePayment(price) {
+    // Use Paystack API to initiate payment
+    // Example code for Paystack popup setup
+    // Replace 'publicKey' with your actual Paystack public key
+    // Replace other placeholder values with actual data
+    const publicKey = 'pk_test_72adfba481a29bf8d587280ca7d96002ac4210c4';
+    const amountInKobo = price * 100;
+
+    const handler = PaystackPop.setup({
+        key: publicKey,
+        email: userEmail,
+        amount: amountInKobo,
+        currency: 'KES',
+        ref: 'pay_' + Date.now(),
+        callback: function(response) {
+            console.log('Payment successful. Transaction reference: ' + response.reference);
+
+            // Handle payment success
+            // You can perform additional actions here
+        },
+        onClose: function() {
+            console.log('Payment closed without completing.');
+        }
+    });
+
+    handler.openIframe();
+}
 
 
 

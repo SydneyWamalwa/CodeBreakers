@@ -48,7 +48,7 @@
                     <strong class="cart-total-title">Total</strong>
                     <span class="cart-total-price">Ksh.0</span>
                 </div>
-                <button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>
+                <button class="btn btn-primary btn-purchase" type="button" onclick="handlePayment()">PURCHASE</button>
             </section>
             {% for record in records %}
             <div class="shop-items product-details">
@@ -67,5 +67,7 @@
         </main>
         <footer>Footer</footer>
     </div>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+
 </body>
 </html>
