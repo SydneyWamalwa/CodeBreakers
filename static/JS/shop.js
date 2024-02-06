@@ -3,12 +3,17 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 430d6ab (shop ongoing payments)
 =======
 >>>>>>> d696e47 (shop ongoing payments)
 =======
 >>>>>>> 34afa80 (modified cart)
+=======
+=======
+>>>>>>> 430d6ab (shop ongoing payments)
+>>>>>>> 59d81d8 (shop ongoing payments)
 function handlePayment(){
     // Retrieve product details
     var userEmail = 'customer@example.com'; // Get customer's email from your application
@@ -51,16 +56,22 @@ function handlePayment(){
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 59d81d8 (shop ongoing payments)
 =======
 >>>>>>> d0d5b13 (modified cart)
 =======
 >>>>>>> 430d6ab (shop ongoing payments)
+<<<<<<< HEAD
 =======
 >>>>>>> d696e47 (shop ongoing payments)
 =======
 =======
 >>>>>>> d0d5b13 (modified cart)
 >>>>>>> 34afa80 (modified cart)
+=======
+>>>>>>> 59d81d8 (shop ongoing payments)
 
 // DomContentLoaded ensure pages isloaded before JavaScript can Execute
 document.addEventListener('DOMContentLoaded', function() {
@@ -184,6 +195,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 
@@ -194,9 +206,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 =======
 >>>>>>> d696e47 (shop ongoing payments)
+=======
+>>>>>>> 59d81d8 (shop ongoing payments)
 
 
 
+=======
+>>>>>>> 430d6ab (shop ongoing payments)
 
 
 
@@ -366,15 +382,21 @@ function addCartToBody(){
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 updateCartCount()   //initialize our shopping count function
 <<<<<<< HEAD
 =======
 =======
 >>>>>>> 00d14a5 (modified cart)
 =======
+>>>>>>> 59d81d8 (shop ongoing payments)
+=======
 =======
 >>>>>>> 021eec1 (modified cart)
+=======
+>>>>>>> 310d27f (shop ongoing payments)
 updateCartCount()   //initialize our shopping count function
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> 430d6ab (shop ongoing payments)
 =======
@@ -384,6 +406,12 @@ updateCartCount()   //initialize our shopping count function
 =======
 <<<<<<< HEAD
 >>>>>>> 34afa80 (modified cart)
+=======
+=======
+=======
+updateCartCount()   //initialize our shopping count function
+>>>>>>> 430d6ab (shop ongoing payments)
+>>>>>>> 59d81d8 (shop ongoing payments)
 
 
 function initiatePayment(price) {
@@ -417,6 +445,9 @@ function initiatePayment(price) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 59d81d8 (shop ongoing payments)
 =======
 addCartToMemory()
 >>>>>>> d0d5b13 (modified cart)
@@ -450,8 +481,18 @@ addCartToMemory()
 =======
 =======
 >>>>>>> 5e45e4c (modified cart)
+<<<<<<< HEAD
 >>>>>>> 021eec1 (modified cart)
+<<<<<<< HEAD
 >>>>>>> 00d14a5 (modified cart)
+=======
+=======
+=======
+
+>>>>>>> 3944efa (shop ongoing payments)
+>>>>>>> 430d6ab (shop ongoing payments)
+>>>>>>> 310d27f (shop ongoing payments)
+>>>>>>> 59d81d8 (shop ongoing payments)
 
 
 
