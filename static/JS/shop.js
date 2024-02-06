@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 430d6ab (shop ongoing payments)
 function handlePayment(){
     // Retrieve product details
     var userEmail = 'customer@example.com'; // Get customer's email from your application
@@ -38,8 +41,11 @@ function handlePayment(){
         console.error('Error saving purchased product details:', error);
     });
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d0d5b13 (modified cart)
+=======
+>>>>>>> 430d6ab (shop ongoing payments)
 
 // DomContentLoaded ensure pages isloaded before JavaScript can Execute
 document.addEventListener('DOMContentLoaded', function() {
@@ -143,9 +149,12 @@ document.addEventListener('DOMContentLoaded', function() {
         cartButton.addEventListener('click', addToCart)
     }
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 430d6ab (shop ongoing payments)
 
 
 
@@ -281,8 +290,13 @@ function addCartToBody(){
         document.getElementsByClassName('cart-total-price')[0].innerText = 'Ksh.' + total
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 updateCartCount()   //initialize our shopping count function
 <<<<<<< HEAD
+=======
+=======
+updateCartCount()   //initialize our shopping count function
+>>>>>>> 430d6ab (shop ongoing payments)
 
 
 function initiatePayment(price) {
@@ -313,12 +327,17 @@ function initiatePayment(price) {
     handler.openIframe();
 }
 
+<<<<<<< HEAD
 =======
 addCartToMemory()
 >>>>>>> d0d5b13 (modified cart)
 
 =======
 >>>>>>> 5e45e4c (modified cart)
+=======
+
+>>>>>>> 3944efa (shop ongoing payments)
+>>>>>>> 430d6ab (shop ongoing payments)
 
 
 
