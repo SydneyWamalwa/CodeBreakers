@@ -49,7 +49,7 @@ def init_db():
                 price VARCHAR NOT NULL,
                 color VARCHAR NOT NULL,
                 image BLOB NOT NULL
-                                   )
+            )
         ''')
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS saved_canvas_content (
@@ -68,8 +68,18 @@ def init_db():
                 price INTEGER NOT NULL
             )
         ''')
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS shop_purchased_products (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_email TEXT NOT NULL,
+                description TEXT NOT NULL,
+                image TEXT NOT NULL,
+                price int NOT NULL
+            )
+        ''')
         db.commit()
 
+# Call the init_db function to ensure all tables are created before running the app
 init_db()
 
 @app.route('/')
@@ -279,6 +289,31 @@ def display_purchased_image(product_id):
         print(f"Error fetching purchased image: {e}")
         return jsonify({'status': 'error', 'message': 'Internal Server Error'}), 500
 
+#shop payment routes
+@app.route('/shop_purchased_product', methods=['POST'])
+def shop_purchased_product():
+    if request.method == 'POST':
+        try:
+            # Retrieve product details from the request
+            user_email = request.json.get('user_email')
+            image_url = request.json.get('image')
+            price = request.json.get('price')
+            description=request.json.get('description')
+
+            # Insert the purchased product details into the database
+            db = get_db()
+            cursor = db.cursor()
+            cursor.execute(
+                'INSERT INTO purchased_shop_products (userEmail, image, price,description) VALUES (?, ?, ?, ?)',
+                (user_email, image_url, price,description)
+            )
+            db.commit()
+            db.close()
+
+            return jsonify({'status': 'success'})
+        except Exception as e:
+            print(f"Error saving purchased product details: {e}")
+            return jsonify({'status': 'error', 'message': 'Internal Server Error'}), 500
 
 init_db()
 if __name__ == '__main__':
