@@ -440,6 +440,39 @@ main{
 }
 
 
+#paymentModal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    width: 300px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#paymentModal label,
+#paymentModal input {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#paymentModal button {
+    background-color: #008000;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#paymentModal button:hover {
+    background-color: #006400;
+}
+
+
 /* @media only screen and (max-width: 768px){
     body {
 

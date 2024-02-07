@@ -443,7 +443,7 @@ nav a:hover {
         const userEmail = getUserEmail();
 
         // Replace 'your_public_key' with your actual Paystack public key
-        const publicKey = 'your_public_key';
+        const publicKey = ' pk_test_72adfba481a29bf8d587280ca7d96002ac4210c4';
         const amountInKobo = 1500 * 100; // Set the price to Ksh.1500
 
         // Initialize Paystack
@@ -467,26 +467,26 @@ nav a:hover {
 
 
 //saving purchase script
-    function savePurchasedProduct(userEmail, price) {
-        fetch('/save_purchased_product', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                userEmail: userEmail,
-                price: price,
-            }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('T-shirt details saved:', data);
-            // Optionally handle the response from the server
-        })
-        .catch(error => {
-            console.error('Error saving T-shirt details:', error);
-        });
-    }
+    // function savePurchasedProduct(userEmail, price) {
+    //     fetch('/save_purchased_product', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({
+    //             userEmail: userEmail,
+    //             price: price,
+    //         }),
+    //     })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         console.log('T-shirt details saved:', data);
+    //         // Optionally handle the response from the server
+    //     })
+    //     .catch(error => {
+    //         console.error('Error saving T-shirt details:', error);
+    //     });
+    // }
 
     </script>
 </div>

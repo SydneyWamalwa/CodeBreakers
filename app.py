@@ -19,6 +19,10 @@ def generate_unique_id():
     timestamp = int(datetime.now().strftime("%Y%m%d%H%M%S%f"))
     return str(timestamp)
 
+@app.route('/generate-reference', methods=['POST'])
+def generate_reference():
+    reference = generate_unique_id()
+    return jsonify({'reference': reference})
 
 def get_db():
     db = getattr(g, '_database', None)
