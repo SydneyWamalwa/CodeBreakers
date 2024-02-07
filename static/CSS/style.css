@@ -33,7 +33,8 @@ body::-webkit-scrollbar{
     margin: 0 auto;
     position: relative;
     margin-left: 20px;
-    /* transition: transform .5s; */
+    transition: transform .5s;
+
 
 }
 .cart-section{
@@ -78,6 +79,7 @@ body.showCart .grid-container{
 
 
 
+
 .cart-column {
 
     border-bottom: 1px solid black;
@@ -99,12 +101,13 @@ body.showCart .grid-container{
 
     top: 40px;
     background:lightgrey;
+
+    top: 40px;
+    background:lightgrey;
 }
 #cart-row {
     position: sticky;
     z-index: 1;
-    top: 40px;
-    background:lightgrey;
 }
 
 
@@ -187,6 +190,8 @@ body.showCart .grid-container{
 .cart-quantity-input{
     height: auto;
     width: 65px;
+    height: auto;
+    width: 65px;
     border-radius: 5px;
     border: 1px solid #56CCF2;
     background-color: #eee;
@@ -196,6 +201,7 @@ body.showCart .grid-container{
     font-size: 1.2em;
 }
 .remove-btn{
+    width: auto;
     width: auto;
     font-size: 1.2em;
     margin: 5px;
@@ -233,6 +239,7 @@ body.showCart .grid-container{
 
 header{
     display: grid;
+    grid-template-columns: repeat(12, 1fr);
     grid-template-columns: repeat(12, 1fr);
     grid-auto-rows: auto;
     grid-column: 1 / 13;
@@ -289,11 +296,61 @@ header{
     display: none;
 }
 
+
+.popktr-header__menu-button{
+    grid-column: 12 / 13;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 8px 10px;
+    margin: 0 0 0 -4px;
+    width: 52px;
+    height: 100%;
+    border-right: 2px solid #f2f2f2;
+    background: #fff;
+    user-select: none;
+}
+
+.popktr-header__menu-button .burger-menu{
+    width: 20px;
+    height: 20px;
+    position:relative;
+}
+.popktr-header__menu-button .burger-menu div:nth-child(1){
+    top: 4px;
+}
+.popktr-header__menu-button .burger-menu div:nth-child(2){
+    top: 4px;
+}
+.popktr-header__menu-button .burger-menu div:nth-child(3){
+    top: 10px;
+}
+.popktr-header__menu-button .burger-menu div:nth-child(4){
+    top: 16px;
+}
+.popktr-header__menu-button .burger-menu div{
+    display: block;
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background: #333;
+    border-radius: 9px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0);
+    transition: .15s ease-in-out;
+    display: none;
+}
+
 .brand{
+    grid-column: 1 / 4;
     grid-column: 1 / 4;
     display: flex;
     align-items: center;
     justify-content: start;
+    justify-self: center;
     justify-self: center;
 }
 .brand-logo{
@@ -305,8 +362,14 @@ header{
     justify-content: center;
 
 }
+.brand-name {
+    align-items: center;
+    justify-content: center;
+
+}
 
 .navbar {
+    grid-column: 5 / 9;
     grid-column: 5 / 9;
     width: auto;
 
@@ -327,18 +390,19 @@ li:hover{
 }
 .shopping{
     grid-column: 10 / 11;
+    grid-column: 10 / 11;
     display: flex;
     align-items: center;
+    justify-content: center;
     justify-content: center;
 }
 .shop-cart-container{
     display: flex;
     cursor: pointer;
+.shop-cart-container{
+    display: flex;
+    cursor: pointer;
     position: absolute;
-    z-index: 1;
-    right: 0;
-    height: fit-content;
-    width: auto;
 
 }
 .shop-cart-icon svg{
@@ -445,39 +509,6 @@ main{
     grid-column:1 / 13;
     background: green;
     padding: 30px;
-}
-
-
-#paymentModal {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-    width: 300px;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-#paymentModal label,
-#paymentModal input {
-    display: block;
-    margin-bottom: 10px;
-}
-
-#paymentModal button {
-    background-color: #008000;
-    color: #fff;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#paymentModal button:hover {
-    background-color: #006400;
 }
 
 
