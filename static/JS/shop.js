@@ -1,20 +1,100 @@
 
+// load the paystack api outside the DOM to ensure their scope is global and can be accessed from anywhere in the code.
+function openPaymentModal() {
+var modal = document.getElementById('paymentModal');
+modal.style.display = 'block';
+}
+                                                                            /*this two functions are responsible for the email popup display*/
+function closePaymentModal() {
+var modal = document.getElementById('paymentModal');
+modal.style.display = 'none';
+}
+
+function processPayment() {
+// Get the email entered by the user
+var userEmail = document.getElementById('email').value;
+
+// Close the payment modal
+closePaymentModal()
+// Make an AJAX request to Flask to generate a unique reference
+fetch('/generate-reference', {                                                              //this is used to create a unique id for each transaction
+    method: 'POST'
+})
+.then(response => response.json())
+.then(data => {
+    // Use the fetched reference number to make the payment through the Paystack API
+    var reference = data.reference;
+
+    // Perform payment processing logic using Paystack API and the total amount
+    var totalAmount = parseFloat(document.querySelector('.cart-total-price').innerText.replace('Ksh.', '').trim());
+    console.log(totalAmount)
+
+    // Now you can use the userEmail, totalAmount, and reference to make the payment through the Paystack API
+    var paystackPayload = {
+        key: 'pk_test_72adfba481a29bf8d587280ca7d96002ac4210c4', // Your test public key
+        email: userEmail,
+        amount: totalAmount * 100, // Amount must be in kobo
+        currency: 'KES',
+        ref: reference, // Use the fetched reference number
+        metadata: {
+            custom_fields: [
+                {
+                    display_name: 'Cart Total',
+                    variable_name: 'cart_total',
+                    value: totalAmount
+                }
+            ]
+        },
+        callback: function(response) {
+            console.log(response);
+            alert('Payment Successful');
+            // handle further actions here, such as updating order status
+        },
+        onClose: function () {
+            alert('Payment window closed without completion');
+        }
+    };
+
+    // Initialize Paystack with the payload
+    var handler = PaystackPop.setup(paystackPayload);
+    handler.openIframe();
+})
+.catch(error => console.error('Error:', error));
+}
+
+
+// Validate email function
+function validateEmail(email) {
+var regex = /\S+@\S+\.\S+/;
+return regex.test(email);
+}
+
+
 // DomContentLoaded ensure pages isloaded before JavaScript can Execute
 document.addEventListener('DOMContentLoaded', function() {
 
-    var carts = []
-    window.addEventListener('load', function () {
-        if (localStorage.getItem('cart')){
-            carts = JSON.parse(localStorage.getItem('cart'))
-            updateCartTotal()
-            updateCartCount()
-            addCartToMemory()
-        }
-    })
+
+// event listner to process paymentonce proceed to purchase button is clicked
+    document.getElementById('purchaseBtn').addEventListener('click', function () {
+        // Display the payment modal when the button is clicked
+        processPayment();
+    });
 
 
 
-    // show the cart contents anytime the shopping cart icon is clicked
+
+
+
+    // window.addEventListener('load', function () {
+    //     if (localStorage.getItem('cart')){
+    //         carts = JSON.parse(localStorage.getItem('cart'))
+    //         updateCartTotal()
+    //         updateCartCount()
+    //     }
+    // })
+
+
+
     //function toggle cart when shopping cart icon is clicked
     let iconCart = document.querySelector('.shop-cart-container');
     let body = document.querySelector('body');
@@ -27,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', removeCartItem) //call the function on a click event
 }
 
-// quantity change event lister
+// quantity change event listener
 // update total when quantity value changes by listening for change event
     var quantityInputs = document.getElementsByClassName('cart-quantity-input')
     for (i = 0; i < quantityInputs.length; i++) {
@@ -35,10 +115,9 @@ document.addEventListener('DOMContentLoaded', function() {
         input.addEventListener('change', quantityChanged) //call a change function on cart-quantity-input class
     }
 
-    // This function uses the quantity input variable in line 18 to get quantityInputs
+    // This function uses the quantity input variable in line 113 to get quantityInputs
     // function to update the number inside the shopping cart with total number of products everytime the quanity changes.
     function updateCartCount(){
-        // var quantityInputs = document.getElementsByClassName('cart-quantity-input')
         var totalCount= 0
         for (var i = 0; i < quantityInputs.length; i++ ){             // loop over all the quantity rows in quantity and increase total with whatever the current quantity for the row is
             totalCount += parseInt(quantityInputs[i].value)
@@ -47,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-// add to cart event listner
+// add to cart event listener
     var addToCartButtons = document.getElementsByClassName('shop-item-button')
     for (i = 0; i < addToCartButtons.length; i++) {
         var cartButton = addToCartButtons[i]
@@ -55,18 +134,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 // alert user when purchase button is clicked and clear the cart
     document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseComplete)
+    // updateCartTotal()   //update total once everything is removed from cart
+    // updateCartCount()
 
 
 
 
 function purchaseComplete(){
-    alert('Thank you for your purchase')
+    // alert('Thank you for your purchase')
+    openPaymentModal();
     var cartItems = document.getElementsByClassName('cart-items')[0]  //get all rows from our cart-items class
     while (cartItems.hasChildNodes()){                                 //if the cart still has any children 'rows' keep running until they are all removed
         cartItems.removeChild(cartItems.firstChild)
     }
-    updateCartTotal()   //update total once everything is removed from cart
-    updateCartCount() //update cart count
+    // updateCartTotal()   //update total once everything is removed from cart
+    // updateCartCount() //update cart count
 
 }
 //function toggle cart when shopping cart icon is clicked
@@ -84,14 +166,10 @@ function addCartToBody(){
         var title = shopItem.getElementsByClassName('shop-item-description')[0].innerText.replace('Description:', '')
         var price = shopItem.getElementsByClassName('shop-item-price')[0].innerText.replace('Price:', '')
         var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src //get the omage source for our images
-        carts.push({title: title, price: price, imageSrc: imageSrc})
         addItemToCart(title, price, imageSrc)
         updateCartTotal()
-        addCartToMemory()
     }
-    const addCartToMemory = () => {
-        localStorage.setItem('cart', JSON.stringify(carts))
-    }
+
 // add items for purchase to cart
     function addItemToCart(title, price, imageSrc){
         var cartRow = document.createElement('div') //create new element to hold our items
@@ -173,9 +251,6 @@ function addCartToBody(){
         document.getElementsByClassName('cart-total-price')[0].innerText = 'Ksh.' + total
     }
 updateCartCount()   //initialize our shopping count function
-
-
-
 
 
 });

@@ -5,7 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/CSS/style.css">
+    <script src="https://js.paystack.co/v1/inline.js"></script>
     <script src="/static/JS/shop.js"></script>
+
     <title>Shop</title>
 </head>
 <body class="">
@@ -40,14 +42,18 @@
                     <span class="cart-product cart-header cart-column">PRODUCT</span>
                     <span class="cart-color cart-header cart-column">COLOR</span>
                     <span class="cart-quantity cart-header cart-column">QUANTITY</span>
-
-
+                    <span class="cart-price cart-header cart-column">PRICE</span>
+                </div>
+                <div class="cart-items">
+                </div>
                 <div class="cart-total">
                     <strong class="cart-total-title">Total</strong>
                     <span class="cart-total-price">Ksh.0</span>
                 </div>
-                <button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>
+                <button class="btn btn-primary btn-purchase" id="purchaseBtn" type="button">PURCHASE</button>
+
             </section>
+
             {% for record in records %}
             <div class="shop-items product-details">
                 <div class="shop-item">
@@ -62,8 +68,21 @@
                 </div>
             </div>
             {% endfor %}
+
         </main>
         <footer>Footer</footer>
     </div>
+<div id="paymentModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closePaymentModal()">&times;</span>
+        <h2>Enter Your Email Address</h2>
+        <form id="paymentForm">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <button type="button" onclick="processPayment()">Proceed to Payment</button>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>
