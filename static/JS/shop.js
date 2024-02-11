@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // event listner to process paymentonce proceed to purchase button is clicked
     document.getElementById('purchaseBtn').addEventListener('click', function () {
         // Display the payment modal when the button is clicked
-        processPayment();
+        openPaymentModal();
     });
 
 
@@ -229,18 +229,18 @@ function addCartToBody(){
     function updateCartTotal() {
     // cart-items is the container class for all our rows. access it and get the very first element from the list[0]
         var cartItemContainer = document.getElementsByClassName('cart-items')[0]
-        
+
         // inside items class get all the rows
         var cartRows = cartItemContainer.getElementsByClassName('cart-row')
         total = 0
         // loop over cart-rows. we only need quantity and price columns
         for (i = 0; i < cartRows.length; i++) {
             var cartRow = cartRows[i] //get a single row from the item rows
-        
+
             // get the price and quantity elements from the row using their class names. get the very first one.
             var priceElement = cartRow.getElementsByClassName('cart-price-details')[0]
             var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0]
-            
+
             // extract the text from an element using innertext. use replace to get rid of currency and float to convert to number
             var price = parseFloat(priceElement.innerText.replace('Ksh.', ''))
             var quantity = quantityElement.value
