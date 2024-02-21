@@ -258,6 +258,7 @@ nav a:hover {
             <div>
             <img class="design" src="/static/images/d1.jpeg" alt="Design 1" width="100px" height="100px">
             <img class="design" src="/static/images/d2.jpg" alt="Design 2" width="100px" height="100px">
+            <textarea id="textbox" rows="4" cols="50" class="design"></textarea>
         </div>
             </div>
         </div>
@@ -426,6 +427,147 @@ nav a:hover {
                         }
                     });
             }
+
+            function createTextClone(text) {
+        const newText = document.createElement('div');
+        newText.textContent = text;
+        newText.classList.add('text-clone');
+        newText.style.position = 'absolute';
+        newText.style.top = '50%'; // Adjust position as needed
+        newText.style.left = '50%'; // Adjust position as needed
+        newText.style.transform = 'translate(-50%, -50%)'; // Center the text
+
+        // Make the text clone draggable and resizable using interact.js
+        interact(newText).draggable({
+            listeners: {
+                move(event) {
+                    const target = event.target;
+                    const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
+                    const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+                    // Translate the element
+                    target.style.webkitTransform = target.style.transform = `translate(${x}px, ${y}px)`;
+
+                    // Update the element's position attributes
+                    target.setAttribute('data-x', x);
+                    target.setAttribute('data-y', y);
+                }
+            }
+        }).resizable({
+            edges: { left: true, right: true, top: true, bottom: true },
+            listeners: {
+                move(event) {
+                    const target = event.target;
+                    const x = (parseFloat(target.getAttribute('data-x')) || 0);
+                    const y = (parseFloat(target.getAttribute('data-y')) || 0);
+
+                    // Resize the element
+                    target.style.width = event.rect.width + 'px';
+                    target.style.height = event.rect.height + 'px';
+
+                    // Translate the element to adjust for resizing from the top or left
+                    target.style.transform = `translate(${x}px, ${y}px)`;
+
+                    // Update the font size based on the resize
+                    const fontSize = Math.min(event.rect.width, event.rect.height) * 0.8; // Adjust this factor as needed
+                    target.style.fontSize = fontSize + 'px';
+                }
+            }
+        });
+
+        tshirtContainer.appendChild(newText);
+    }
+
+    // Event listener for text input
+    const textBox = document.getElementById('textbox');
+    textBox.addEventListener('input', function () {
+        const text = textBox.value;
+        // Remove any existing text clones on the canvas
+        const existingTextClones = document.querySelectorAll('.text-clone');
+        existingTextClones.forEach(clone => clone.remove());
+        // Create a new text clone with the entered text
+        createTextClone(text);
+    });
+
+    // Function to handle font change
+    function changeFont(font) {
+        const textClones = document.querySelectorAll('.text-clone');
+        textClones.forEach(clone => {
+            clone.style.fontFamily = font;
+        });
+    }
+
+    // Function to handle text color change
+    function changeTextColor(color) {
+        const textClones = document.querySelectorAll('.text-clone');
+        textClones.forEach(clone => {
+            clone.style.color = color;
+        });
+    }
+
+    // Function to handle bold text
+    function toggleBold() {
+        const textClones = document.querySelectorAll('.text-clone');
+        textClones.forEach(clone => {
+            clone.style.fontWeight = clone.style.fontWeight === 'bold' ? 'normal' : 'bold';
+        });
+    }
+
+    // Event listeners for font, text color, and bold change
+    const fontSelect = document.getElementById('font-select');
+    const textColorInput = document.getElementById('text-color-input');
+    const boldButton = document.getElementById('bold-button');
+
+    fontSelect.addEventListener('change', function () {
+        changeFont(this.value);
+    });
+
+    textColorInput.addEventListener('input', function () {
+        changeTextColor(this.value);
+    });
+
+    boldButton.addEventListener('click', function () {
+        toggleBold();
+    });
+
+    // Add dragstart event listener to the text box
+    textBox.addEventListener('dragstart', function (event) {
+        event.dataTransfer.setData('text/plain', ''); // Required for Firefox
+        selectedText = event.target;
+    });
+
+    // Add dragover event listener to the tshirt container
+    tshirtContainer.addEventListener('dragover', function (event) {
+        event.preventDefault();
+    });
+
+    // Add drop event listener to the tshirt container
+    tshirtContainer.addEventListener('drop', function (event) {
+        event.preventDefault();
+
+        if (selectedText) {
+            // Get the bounding rectangle of the T-shirt canvas
+            const tshirtRect = tshirtContainer.getBoundingClientRect();
+
+            // Calculate the position relative to the T-shirt canvas
+            const offsetX = event.clientX - tshirtRect.left;
+            const offsetY = event.clientY - tshirtRect.top;
+
+            // Clone the original text box and append it to the T-shirt container
+            const newText = selectedText.cloneNode(true);
+            newText.removeAttribute('id'); // Remove id to prevent duplication
+            newText.classList.remove('text-clone');
+            tshirtContainer.appendChild(newText);
+
+            // Update the position of the new text element
+            newText.style.position = 'absolute';
+            newText.style.left = offsetX + 'px';
+            newText.style.top = offsetY + 'px';
+
+            selectedText = null;
+        }
+    });
+
         });
 
 
