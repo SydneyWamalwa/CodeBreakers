@@ -211,6 +211,27 @@ nav a:hover {
     .close:hover {
         color: red;
     }
+
+    .popup-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    touch-action: manipulation; /* Add this line */
+}
+
+.design-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* This creates 2 columns of equal width */
+    grid-gap: 20px;
+}
+
     </style>
 </head>
 
@@ -255,11 +276,15 @@ nav a:hover {
             <div class="design-section">
                 <h2>Designs</h2>
             <!-- Add drag-and-drop designs here -->
-            <div>
+            <div class="design-grid">
+            <textarea id="textbox" rows="4" cols="50" class="design" placeholder="Enter Text..."></textarea>
             <img class="design" src="/static/images/d1.jpeg" alt="Design 1" width="100px" height="100px">
             <img class="design" src="/static/images/d2.jpg" alt="Design 2" width="100px" height="100px">
-            <textarea id="textbox" rows="4" cols="50" class="design"></textarea>
-        </div>
+            <img class="design" src="/static/images/Ye.jpg" alt="Design 2" width="100px" height="100px">
+            <img class="design" src="/static/images/Indicud.jpg" alt="Design 2" width="100px" height="100px">
+            <img class="design" src="/static/images/art1.jpg" alt="Design 2" width="100px" height="100px">
+            <img class="design" src="/static/images/art2.webp" alt="Design 2" width="100px" height="100px">
+            </div>
             </div>
         </div>
     </div>
@@ -286,6 +311,25 @@ nav a:hover {
         <button onclick="saveCustomDesign()" type="button">Save Custom Design</button>
         <button onclick="showPurchasePopup()" type="button">Purchase</button>
     </div>
+
+    <!-- Add this markup to your HTML file -->
+    <div id="textOptionsPopup" class="popup-container">
+        <div class="popup-content">
+            <span class="close" onclick="closeTextOptionsPopup()">&times;</span>
+            <label for="fontSelect">Font:</label>
+            <select id="fontSelect">
+                <option value="Arial">Arial</option>
+                <option value="Verdana">Verdana</option>
+                <option value="times"></option>
+                <!-- Add more font options as needed -->
+            </select>
+            <label for="boldCheckbox">Bold:</label>
+            <input type="checkbox" id="boldCheckbox" onchange="toggleBold()">
+            <input type="color" id="textColorInput" onchange="changeTextColor(this.value)">
+            <button onclick="bendText()">Bend Text</button>
+        </div>
+    </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/dragula/dist/dragula.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
@@ -474,6 +518,24 @@ nav a:hover {
                 }
             }
         });
+
+        // Append a link for editing text
+    const editLink = document.createElement('a');
+    editLink.textContent = 'Edit Text';
+    editLink.href = '#'; // Set href to "#" as a placeholder
+    editLink.onclick = function() {
+        showTextOptionsPopup(newText); // Call function to show popup for text editing
+        return false; // Prevent default link behavior
+    };
+    newText.appendChild(editLink);
+
+    newText.addEventListener('mouseenter', function() {
+        editLink.style.display = 'inline'; // Show the link on mouse enter
+    });
+
+    newText.addEventListener('mouseleave', function() {
+        editLink.style.display = 'none'; // Hide the link on mouse leave
+    });
 
         tshirtContainer.appendChild(newText);
     }
@@ -729,6 +791,120 @@ function getSelectedImageUrl() {
     const imageUrl = backgroundImage.slice(5, -2);
 
     return imageUrl;
+}
+
+
+
+// Inside showPopupForText function
+
+// Get font select, bold checkbox, and text color input elements
+const fontSelect = document.getElementById('fontSelect');
+const boldCheckbox = document.getElementById('boldCheckbox');
+const textColorInput = document.getElementById('textColorInput');
+
+// Add event listeners to font select, bold checkbox, and text color input
+fontSelect.addEventListener('change', function() {
+    changeFont(this.value); // Call changeFont function when font is changed
+});
+
+boldCheckbox.addEventListener('change', function() {
+    toggleBold(); // Call toggleBold function when bold checkbox is toggled
+});
+
+textColorInput.addEventListener('input', function() {
+    changeTextColor(this.value); // Call changeTextColor function when text color is changed
+});
+
+// Function to handle font change
+function changeFont(font) {
+    const selectedText = document.querySelector('.text-clone');
+    if (selectedText) {
+        selectedText.style.fontFamily = font;
+    }
+}
+
+// Function to handle toggling bold
+function toggleBold() {
+    const selectedText = document.querySelector('.text-clone');
+    if (selectedText) {
+        selectedText.style.fontWeight = selectedText.style.fontWeight === 'bold' ? 'normal' : 'bold';
+    }
+}
+
+// Function to handle text color change
+function changeTextColor(color) {
+    const selectedText = document.querySelector('.text-clone');
+    if (selectedText) {
+        selectedText.style.color = color;
+    }
+}
+
+
+// Function to handle bending text (example)
+// Function to bend the text
+// Function to bend the text
+function bendText() {
+    const selectedText = document.querySelector('.text-clone');
+    if (!selectedText) return;
+
+    // Get the text content
+    const text = selectedText.textContent;
+    const length = text.length;
+
+    // Calculate the angle increment for distributing characters along the semi-circle
+    const angleIncrement = Math.PI / (length + 1);
+
+    // Initial angle
+    let angle = Math.PI / 2 - angleIncrement; // Start from the top
+
+    // Radius of the semi-circle
+    const radius = 100; // Adjust as needed
+
+    // Set the text to be transparent
+    selectedText.style.opacity = '0';
+
+    // Iterate over each character, position them along the semi-circle
+    for (let i = 0; i < length; i++) {
+        const character = text[i];
+        const span = document.createElement('span');
+        span.textContent = character;
+
+        // Calculate the position along the semi-circle using polar coordinates
+        const x = Math.cos(angle) * radius;
+        const y = Math.sin(angle) * radius;
+
+        // Apply positioning and rotation
+        span.style.position = 'absolute';
+        span.style.left = `${50 + x}px`; // Center horizontally
+        span.style.top = `${150 + y}px`; // Adjust vertical position as needed
+        const rotation = angle - Math.PI / 2; // Reverse rotation direction
+        span.style.transform = `rotate(${rotation}rad)`;
+
+        // Append the span to the original text
+        selectedText.appendChild(span);
+
+        // Increment angle for the next character
+        angle -= angleIncrement; // Decrease angle for downward curve
+    }
+}
+
+
+
+
+
+
+// Function to show the text options popup
+function showTextOptionsPopup() {
+    console.log('Showing popup...');
+    const textOptionsPopup = document.getElementById('textOptionsPopup');
+    textOptionsPopup.style.display = 'block';
+}
+
+// Function to close the text options popup
+function closeTextOptionsPopup() {
+    console.log('Closing popup...');
+    const textOptionsPopup = document.getElementById('textOptionsPopup');
+    textOptionsPopup.style.display = 'none';
 }
 
 
