@@ -19,12 +19,12 @@
                 <span class="brand-name">PopKulture</span>
             </div>
             <div class="navbar">
-                <ul>
-                    <li><a href="#">shop</a></li>
-                    <li><a href="/add_product">Create it</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
+                <nav>
+                    <a href="#">shop</a>
+                    <a href="/">Create it</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Contact</a>
+                </nav>
             </div>
             <div class="shopping">
                 <div class="shop-cart-container">
@@ -46,12 +46,14 @@
                 </div>
                 <div class="cart-items">
                 </div>
+
                 <div class="cart-total">
                     <strong class="cart-total-title">Total</strong>
                     <span class="cart-total-price">Ksh.0</span>
                 </div>
-                <button class="btn btn-primary btn-purchase" id="purchaseBtn" type="button">PURCHASE</button>
+                <button class="btn btn-primary btn-purchase" type="button" onclick="handlePayment()">PURCHASE</button>
 
+                <button class="btn btn-primary btn-purchase" id="purchaseBtn" type="button">PURCHASE</button>
             </section>
 
             {% for record in records %}
@@ -72,6 +74,8 @@
         </main>
         <footer>Footer</footer>
     </div>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+
 <div id="paymentModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closePaymentModal()">&times;</span>
@@ -83,6 +87,5 @@
         </form>
     </div>
 </div>
-
 </body>
 </html>
