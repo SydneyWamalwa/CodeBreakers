@@ -714,9 +714,8 @@ function initiatePayment() {
         captureCanvasScreenshot().then(screenshotUrl => {
             const imageUrl = getSelectedImageUrl();
 
-        // Replace 'your_public_key' with your actual Paystack public key
-        const publicKey = ' pk_test_72adfba481a29bf8d587280ca7d96002ac4210c4';
-        const amountInKobo = 1500 * 100; // Set the price to Ksh.1500
+            const publicKey = 'pk_test_72adfba481a29bf8d587280ca7d96002ac4210c4';
+            const amountInKobo = 1500 * 100;
 
             const handler = PaystackPop.setup({
                 key: publicKey,
