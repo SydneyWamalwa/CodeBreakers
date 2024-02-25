@@ -1,19 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 430d6ab (shop ongoing payments)
-=======
->>>>>>> d696e47 (shop ongoing payments)
-=======
->>>>>>> 34afa80 (modified cart)
-=======
-=======
->>>>>>> 430d6ab (shop ongoing payments)
->>>>>>> 59d81d8 (shop ongoing payments)
+
 function handlePayment(){
     // Retrieve product details
     var userEmail = 'customer@example.com'; // Get customer's email from your application
@@ -53,27 +38,7 @@ function handlePayment(){
         console.error('Error saving purchased product details:', error);
     });
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 59d81d8 (shop ongoing payments)
-=======
->>>>>>> d0d5b13 (modified cart)
-=======
->>>>>>> 430d6ab (shop ongoing payments)
-<<<<<<< HEAD
-=======
->>>>>>> d696e47 (shop ongoing payments)
-=======
-=======
->>>>>>> d0d5b13 (modified cart)
->>>>>>> 34afa80 (modified cart)
-=======
->>>>>>> 59d81d8 (shop ongoing payments)
-<<<<<<< HEAD
-=======
+
 
 
 // Validate email function
@@ -87,83 +52,17 @@ return regex.test(email);
 
 // DomContentLoaded ensure pages isloaded before JavaScript can Execute
 document.addEventListener('DOMContentLoaded', function() {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 00d14a5 (modified cart)
-=======
-=======
->>>>>>> 021eec1 (modified cart)
 
 // DomContentLoaded ensure pages isloaded before JavaScript can Execute
 document.addEventListener('DOMContentLoaded', function() {
->>>>>>> d0d5b13 (modified cart)
-
-=======
-=======
-
-=======
->>>>>>> d0d5b13 (modified cart)
-
-=======
-=======
-
->>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
->>>>>>> 34afa80 (modified cart)
     var carts = []
     window.addEventListener('load', function () {
         if (localStorage.getItem('cart')){
             carts = JSON.parse(localStorage.getItem('cart'))
             updateCartTotal()
             updateCartCount()
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
             addCartToMemory()
-=======
->>>>>>> d0d5b13 (modified cart)
-=======
->>>>>>> d0d5b13 (modified cart)
-=======
-            addCartToMemory()
-=======
->>>>>>> d0d5b13 (modified cart)
->>>>>>> 34afa80 (modified cart)
-        }
-    })
-<<<<<<< HEAD
-=======
-
-
-
-
-
-
-    // window.addEventListener('load', function () {
-    //     if (localStorage.getItem('cart')){
-    //         carts = JSON.parse(localStorage.getItem('cart'))
-    //         updateCartTotal()
-    //         updateCartCount()
-    //     }
-    // })
->>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
-
-
-
-    // show the cart contents anytime the shopping cart icon is clicked
-    //function toggle cart when shopping cart icon is clicked
-<<<<<<< HEAD
-=======
-
-    var carts = []
-    window.addEventListener('load', function () {
-        if (localStorage.getItem('cart')){
-            carts = JSON.parse(localStorage.getItem('cart'))
-            updateCartTotal()
-            updateCartCount()
         }
     })
 
@@ -171,26 +70,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // show the cart contents anytime the shopping cart icon is clicked
     //function toggle cart when shopping cart icon is clicked
->>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 5e45e4c (modified cart)
-=======
->>>>>>> d0d5b13 (modified cart)
-=======
->>>>>>> a341b2f (modified cart)
-=======
->>>>>>> 10340d9 (modified cart)
->>>>>>> 34afa80 (modified cart)
-=======
->>>>>>> 10340d9 (modified cart)
-=======
-=======
->>>>>>> 5e45e4c (modified cart)
->>>>>>> 021eec1 (modified cart)
->>>>>>> 00d14a5 (modified cart)
     let iconCart = document.querySelector('.shop-cart-container');
     let body = document.querySelector('body');
     iconCart.addEventListener('click', addCartToBody)
@@ -206,13 +85,6 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', removeCartItem) //call the function on a click event
 }
 
-<<<<<<< HEAD
-=======
-// quantity change event listener
-
-// quantity change event lister
-
->>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
 // quantity change event lister
 // update total when quantity value changes by listening for change event
     var quantityInputs = document.getElementsByClassName('cart-quantity-input')
@@ -233,72 +105,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-<<<<<<< HEAD
-=======
-// add to cart event listener
-
-    // This function uses the quantity input variable in line 18 to get quantityInputs
-    // function to update the number inside the shopping cart with total number of products everytime the quanity changes.
-    function updateCartCount(){
-        // var quantityInputs = document.getElementsByClassName('cart-quantity-input')
-        var totalCount= 0
-        for (var i = 0; i < quantityInputs.length; i++ ){             // loop over all the quantity rows in quantity and increase total with whatever the current quantity for the row is
-            totalCount += parseInt(quantityInputs[i].value)
-        }
-        document.querySelector('.shop-items-count').innerText = totalCount
-    }
-
-
-// add to cart event listner
-
-    // This function uses the quantity input variable in line 18 to get quantityInputs
-    // function to update the number inside the shopping cart with total number of products everytime the quanity changes.
-    function updateCartCount(){
-        // var quantityInputs = document.getElementsByClassName('cart-quantity-input')
-        var totalCount= 0
-        for (var i = 0; i < quantityInputs.length; i++ ){             // loop over all the quantity rows in quantity and increase total with whatever the current quantity for the row is
-            totalCount += parseInt(quantityInputs[i].value)
-        }
-        document.querySelector('.shop-items-count').innerText = totalCount
-    }
-
-
->>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
 // add to cart event listner
     var addToCartButtons = document.getElementsByClassName('shop-item-button')
     for (i = 0; i < addToCartButtons.length; i++) {
         var cartButton = addToCartButtons[i]
         cartButton.addEventListener('click', addToCart)
     }
-<<<<<<< HEAD
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> 430d6ab (shop ongoing payments)
-
-
-
-=======
->>>>>>> d696e47 (shop ongoing payments)
-=======
->>>>>>> 59d81d8 (shop ongoing payments)
-
-
-
-=======
->>>>>>> 430d6ab (shop ongoing payments)
-
-
-
-=======
 // alert user when purchase button is clicked and clear the cart
     document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseComplete)
->>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
+
 
 
 
@@ -309,13 +125,6 @@ function purchaseComplete(){
     while (cartItems.hasChildNodes()){                                 //if the cart still has any children 'rows' keep running until they are all removed
         cartItems.removeChild(cartItems.firstChild)
     }
-<<<<<<< HEAD
-=======
-    // updateCartTotal()   //update total once everything is removed from cart
-    // updateCartCount() //update cart count
-    updateCartTotal()   //update total once everything is removed from cart
-    updateCartCount() //update cart count
->>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
     updateCartTotal()   //update total once everything is removed from cart
     updateCartCount() //update cart count
 
@@ -344,23 +153,12 @@ function addCartToBody(){
         var price = shopItem.getElementsByClassName('shop-item-price')[0].innerText.replace('Price:', '')
         var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src //get the omage source for our images
         carts.push({title: title, price: price, imageSrc: imageSrc})
-<<<<<<< HEAD
-=======
-        carts.push({title: title, price: price, imageSrc: imageSrc})
->>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
         addItemToCart(title, price, imageSrc)
         updateCartTotal()
         addCartToMemory()
     }
     const addCartToMemory = () => {
         localStorage.setItem('cart', JSON.stringify(carts))
-<<<<<<< HEAD
-=======
-        addCartToMemory()
-    }
-    const addCartToMemory = () => {
-        localStorage.setItem('cart', JSON.stringify(carts))
->>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
     }
 // add items for purchase to cart
     function addItemToCart(title, price, imageSrc){
@@ -419,47 +217,8 @@ function addCartToBody(){
         var buttonClicked = event.target
             buttonClicked.parentElement.parentElement.remove()
             updateCartTotal()
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 34afa80 (modified cart)
-=======
-=======
-=======
->>>>>>> 021eec1 (modified cart)
->>>>>>> 00d14a5 (modified cart)
-<<<<<<< HEAD
-            // updateCartCount()
-<<<<<<< HEAD
-=======
+
             updateCartCount()
->>>>>>> d0d5b13 (modified cart)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 5e45e4c (modified cart)
-=======
-            updateCartCount()
->>>>>>> d0d5b13 (modified cart)
-=======
->>>>>>> a341b2f (modified cart)
-=======
->>>>>>> 10340d9 (modified cart)
->>>>>>> 34afa80 (modified cart)
-=======
->>>>>>> 10340d9 (modified cart)
-=======
-=======
->>>>>>> 5e45e4c (modified cart)
->>>>>>> 021eec1 (modified cart)
->>>>>>> 00d14a5 (modified cart)
-=======
-            updateCartCount()
->>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
     }
 // function to update the cart total
     function updateCartTotal() {
@@ -486,44 +245,7 @@ function addCartToBody(){
         // get the cart total using its class name and change its text to above total using innertext
         document.getElementsByClassName('cart-total-price')[0].innerText = 'Ksh.' + total
     }
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 updateCartCount()   //initialize our shopping count function
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 00d14a5 (modified cart)
-=======
->>>>>>> 59d81d8 (shop ongoing payments)
-=======
-=======
->>>>>>> 021eec1 (modified cart)
-=======
->>>>>>> 310d27f (shop ongoing payments)
-updateCartCount()   //initialize our shopping count function
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 430d6ab (shop ongoing payments)
-=======
-=======
-updateCartCount()   //initialize our shopping count function
->>>>>>> d696e47 (shop ongoing payments)
-=======
-<<<<<<< HEAD
->>>>>>> 34afa80 (modified cart)
-=======
-=======
-=======
-updateCartCount()   //initialize our shopping count function
->>>>>>> 430d6ab (shop ongoing payments)
->>>>>>> 59d81d8 (shop ongoing payments)
 
 
 function initiatePayment(price) {
@@ -554,37 +276,13 @@ function initiatePayment(price) {
     handler.openIframe();
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 59d81d8 (shop ongoing payments)
-=======
-addCartToMemory()
->>>>>>> d0d5b13 (modified cart)
 
-<<<<<<< HEAD
-=======
->>>>>>> 5e45e4c (modified cart)
-=======
-=======
-=======
-addCartToMemory()
->>>>>>> d0d5b13 (modified cart)
->>>>>>> 34afa80 (modified cart)
-
->>>>>>> 3944efa (shop ongoing payments)
->>>>>>> 430d6ab (shop ongoing payments)
-=======
 updateCartCount()   //initialize our shopping count function
 updateCartCount()   //initialize our shopping count function
 addCartToMemory()
 
->>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
 
-
-
+})
 });
 
 

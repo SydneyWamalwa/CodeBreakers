@@ -652,97 +652,6 @@ nav a:hover {
         const userEmailInput = document.getElementById('userEmailInput');
         return userEmailInput.value;
     }
-<<<<<<< HEAD
-
-    // Function to get the selected size
-function getSelectedSize() {
-    const sizeButtons = document.querySelectorAll('.sizes p');
-    for (const button of sizeButtons) {
-        if (button.classList.contains('selected')) {
-            return button.innerText;
-        }
-    }
-    // Return a default size or handle the case where no size is selected
-    return 'Medium';
-}
-
-
-// Function to handle size button click
-function handleSizeButtonClick(button) {
-    const sizeButtons = document.querySelectorAll('.sizes p');
-    for (const sizeButton of sizeButtons) {
-        sizeButton.classList.remove('selected');
-    }
-    button.classList.add('selected');
-}
-
-// Attach event listeners to size buttons
-const sizeButtons = document.querySelectorAll('.sizes p');
-for (const sizeButton of sizeButtons) {
-    sizeButton.addEventListener('click', function () {
-        handleSizeButtonClick(this);
-    });}
-
-       // Function to capture the canvas screenshot
-function captureCanvasScreenshot() {
-    const canvasContainer = document.getElementById('canvas-container');
-
-    return domtoimage.toPng(canvasContainer)
-        .then(dataUrl => {
-            return dataUrl;
-        })
-        .catch(error => {
-            console.error('Error capturing canvas content:', error);
-            return null;
-        });
-}
-
-// Modified initiatePayment function
-// Function to get the selected color from the color picker
-function getSelectedColor() {
-    const colorPicker = document.getElementById('colorPicker');
-    return colorPicker.value;
-}
-
-// Modified initiatePayment function
-function initiatePayment() {
-    const userEmail = getUserEmail();
-    const selectedSize = getSelectedSize();
-    const selectedColor = getSelectedColor();
-
-    if (selectedColor) {
-        // Capture canvas screenshot before initiating payment
-        captureCanvasScreenshot().then(screenshotUrl => {
-            const imageUrl = getSelectedImageUrl();
-
-            const publicKey = 'pk_test_72adfba481a29bf8d587280ca7d96002ac4210c4';
-            const amountInKobo = 1500 * 100;
-
-            const handler = PaystackPop.setup({
-                key: publicKey,
-                email: userEmail,
-                amount: amountInKobo,
-                currency: 'KES',
-                ref: 'pay_' + Date.now(),
-                callback: function (response) {
-                    console.log('Payment successful. Transaction reference: ' + response.reference);
-
-                    // Save purchased product details to the server
-                    savePurchasedProduct(userEmail, selectedSize, selectedColor, imageUrl, screenshotUrl);
-
-                    showPurchasePopup();
-                },
-                onClose: function () {
-                    console.log('Payment closed without completing.');
-                }
-            });
-
-            handler.openIframe();
-        });
-    } else {
-        console.error('Color option not selected');
-    }
-=======
 
     // Function to get the selected size
 function getSelectedSize() {
@@ -833,7 +742,6 @@ function initiatePayment() {
     } else {
         console.error('Color option not selected');
     }
->>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
 }
 
     // Function to update the selected color
