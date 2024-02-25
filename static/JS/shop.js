@@ -9,10 +9,14 @@ function closePaymentModal() {
 var modal = document.getElementById('paymentModal');
 modal.style.display = 'none';
 }
+function getUserEmail() {
+    const userEmailInput = document.getElementById('email');
+    return userEmailInput.value;
+}
 
 function processPayment() {
 // Get the email entered by the user
-var userEmail = document.getElementById('email').value;
+const userEmail = getUserEmail()
 
 // Close the payment modal
 closePaymentModal()
@@ -26,14 +30,14 @@ fetch('/generate-reference', {                                                  
     var reference = data.reference;
 
     // Perform payment processing logic using Paystack API and the total amount
-    var totalAmount = parseFloat(document.querySelector('.cart-total-price').innerText.replace('Ksh.', '').trim());
-    console.log(totalAmount)
+    // var totalAmount = parseFloat(document.querySelector('.cart-total-price').innerText.replace('Ksh.', '').trim());
+    // console.log(totalAmount)
 
     // Now you can use the userEmail, totalAmount, and reference to make the payment through the Paystack API
     var paystackPayload = {
         key: 'pk_test_72adfba481a29bf8d587280ca7d96002ac4210c4', // Your test public key
         email: userEmail,
-        amount: totalAmount * 100, // Amount must be in kobo
+        amount: total * 100, // Amount must be in kobo. the total variable is calculated when we calculated cart-item-total
         currency: 'KES',
         ref: reference, // Use the fetched reference number
         metadata: {
@@ -41,13 +45,18 @@ fetch('/generate-reference', {                                                  
                 {
                     display_name: 'Cart Total',
                     variable_name: 'cart_total',
-                    value: totalAmount
+                    value: total
                 }
             ]
         },
         callback: function(response) {
             console.log(response);
-            alert('Payment Successful');
+            var reference = response.reference
+                purchaseComplete()
+                closePaymentModal()
+
+                alert('Payment Successful!!!' + reference);
+
             // handle further actions here, such as updating order status
         },
         onClose: function () {
@@ -64,10 +73,10 @@ fetch('/generate-reference', {                                                  
 
 
 // Validate email function
-function validateEmail(email) {
-var regex = /\S+@\S+\.\S+/;
-return regex.test(email);
-}
+// function validateEmail(email) {
+// var regex = /\S+@\S+\.\S+/;
+// return regex.test(email);
+// }
 
 
 // DomContentLoaded ensure pages isloaded before JavaScript can Execute
@@ -79,19 +88,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // Display the payment modal when the button is clicked
         processPayment();
     });
-
-
-
-
-
-
-    // window.addEventListener('load', function () {
-    //     if (localStorage.getItem('cart')){
-    //         carts = JSON.parse(localStorage.getItem('cart'))
-    //         updateCartTotal()
-    //         updateCartCount()
-    //     }
-    // })
 
 
 
@@ -136,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseComplete)
     // updateCartTotal()   //update total once everything is removed from cart
     // updateCartCount()
-
+    // openPaymentModal();
 
 
 
@@ -146,9 +142,11 @@ function purchaseComplete(){
     var cartItems = document.getElementsByClassName('cart-items')[0]  //get all rows from our cart-items class
     while (cartItems.hasChildNodes()){                                 //if the cart still has any children 'rows' keep running until they are all removed
         cartItems.removeChild(cartItems.firstChild)
+
     }
     // updateCartTotal()   //update total once everything is removed from cart
-    // updateCartCount() //update cart count
+    // updateCartCount()
+    //update cart count
 
 }
 //function toggle cart when shopping cart icon is clicked
@@ -223,7 +221,7 @@ function addCartToBody(){
         var buttonClicked = event.target
             buttonClicked.parentElement.parentElement.remove()
             updateCartTotal()
-            // updateCartCount()
+            updateCartCount()
     }
 // function to update the cart total
     function updateCartTotal() {
