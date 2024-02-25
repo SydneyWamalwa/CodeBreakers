@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, g, jsonify,send_from_directory,send_file
 from io import BytesIO
-from PIL import Image
+# from PIL import Image
 import sqlite3
 import os
 import time

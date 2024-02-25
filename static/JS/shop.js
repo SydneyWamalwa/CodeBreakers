@@ -1,37 +1,66 @@
 
-function handlePayment(){
-    // Retrieve product details
-    var userEmail = 'customer@example.com'; // Get customer's email from your application
-    var description = title; // Example: Get selected size from your application
-    var image = imageSrc; // Example: Get image URL from your application
+// load the paystack api outside the DOM to ensure their scope is global and can be accessed from anywhere in the code.
+function openPaymentModal() {
+var modal = document.getElementById('paymentModal');
+modal.style.display = 'block';
+}
+                                                                            /*this two functions are responsible for the email popup display*/
+function closePaymentModal() {
+var modal = document.getElementById('paymentModal');
+modal.style.display = 'none';
+}
+function getUserEmail() {
+    const userEmailInput = document.getElementById('email');
+    return userEmailInput.value;
+}
 
-    // Amount should be calculated based on product price and quantity
-    var price = total; // Example: Get product price from your application
+function processPayment() {
+// Get the email entered by the user
+const userEmail = getUserEmail()
 
-    // Prepare data to send to backend
-    var data = {
-        user_email: userEmail,
-        image: image,
-        price: price,
-        description: description
-    };
+// Close the payment modal
+closePaymentModal()
+// Make an AJAX request to Flask to generate a unique reference
+fetch('/generate-reference', {                                                              //this is used to create a unique id for each transaction
+    method: 'POST'
+})
+.then(response => response.json())
+.then(data => {
+    // Use the fetched reference number to make the payment through the Paystack API
+    var reference = data.reference;
 
-    // Make a POST request to the backend to initiate payment processing
-    fetch('/shop_purchased_product', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
+    // Perform payment processing logic using Paystack API and the total amount
+    // var totalAmount = parseFloat(document.querySelector('.cart-total-price').innerText.replace('Ksh.', '').trim());
+    // console.log(totalAmount)
+
+    // Now you can use the userEmail, totalAmount, and reference to make the payment through the Paystack API
+    var paystackPayload = {
+        key: 'pk_test_72adfba481a29bf8d587280ca7d96002ac4210c4', // Your test public key
+        email: userEmail,
+        amount: total * 100, // Amount must be in kobo. the total variable is calculated when we calculated cart-item-total
+        currency: 'KES',
+        ref: reference, // Use the fetched reference number
+        metadata: {
+            custom_fields: [
+                {
+                    display_name: 'Cart Total',
+                    variable_name: 'cart_total',
+                    value: total
+                }
+            ]
         },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'success') {
-            // Proceed to initiate payment using Paystack popup
-            initiatePayment(data.price, data.image, data.description,data.user_email);
-        } else {
-            // Handle error
-            console.error('Failed to save purchased product details:', data.message);
+        callback: function(response) {
+            console.log(response);
+            var reference = response.reference
+                purchaseComplete()
+                closePaymentModal()
+
+                alert('Payment Successful!!!' + reference);
+
+            // handle further actions here, such as updating order status
+        },
+        onClose: function () {
+            alert('Payment window closed without completion');
         }
     })
     .catch(error => {
@@ -46,8 +75,6 @@ function validateEmail(email) {
 var regex = /\S+@\S+\.\S+/;
 return regex.test(email);
 }
-
->>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
 
 
 // DomContentLoaded ensure pages isloaded before JavaScript can Execute
@@ -124,6 +151,7 @@ function purchaseComplete(){
     var cartItems = document.getElementsByClassName('cart-items')[0]  //get all rows from our cart-items class
     while (cartItems.hasChildNodes()){                                 //if the cart still has any children 'rows' keep running until they are all removed
         cartItems.removeChild(cartItems.firstChild)
+
     }
     updateCartTotal()   //update total once everything is removed from cart
     updateCartCount() //update cart count
