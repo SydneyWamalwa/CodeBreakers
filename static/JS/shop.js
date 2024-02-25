@@ -73,17 +73,14 @@ function handlePayment(){
 =======
 >>>>>>> 59d81d8 (shop ongoing payments)
 
-// DomContentLoaded ensure pages isloaded before JavaScript can Execute
-document.addEventListener('DOMContentLoaded', function() {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 00d14a5 (modified cart)
-=======
-=======
->>>>>>> 021eec1 (modified cart)
+
+// Validate email function
+function validateEmail(email) {
+var regex = /\S+@\S+\.\S+/;
+return regex.test(email);
+}
+
+
 
 // DomContentLoaded ensure pages isloaded before JavaScript can Execute
 document.addEventListener('DOMContentLoaded', function() {
@@ -117,6 +114,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+
+
+
+    // window.addEventListener('load', function () {
+    //     if (localStorage.getItem('cart')){
+    //         carts = JSON.parse(localStorage.getItem('cart'))
+    //         updateCartTotal()
+    //         updateCartCount()
+    //     }
+    // })
+
+
+
+    //function toggle cart when shopping cart icon is clicked
+
+    var carts = []
+    window.addEventListener('load', function () {
+        if (localStorage.getItem('cart')){
+            carts = JSON.parse(localStorage.getItem('cart'))
+            updateCartTotal()
+            updateCartCount()
+        }
+    })
+
+
+
     // show the cart contents anytime the shopping cart icon is clicked
     //function toggle cart when shopping cart icon is clicked
 <<<<<<< HEAD
@@ -142,7 +165,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let body = document.querySelector('body');
     iconCart.addEventListener('click', addCartToBody)
     iconCart.addEventListener('click', addCartToBody)
+    iconCart.addEventListener('click', addCartToBody)
 
+    // removing items from cart event listener
     // removing items from cart event listener
     // removing items from cart event listener
     var removeCartItemButtons = document.getElementsByClassName('remove-btn') // loop over all buttons in the cart and add an event listner for whatever index the button is currently on
@@ -152,6 +177,8 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 // quantity change event listener
+
+// quantity change event lister
 
 // quantity change event lister
 // update total when quantity value changes by listening for change event
@@ -187,32 +214,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 // add to cart event listner
+
+    // This function uses the quantity input variable in line 18 to get quantityInputs
+    // function to update the number inside the shopping cart with total number of products everytime the quanity changes.
+    function updateCartCount(){
+        // var quantityInputs = document.getElementsByClassName('cart-quantity-input')
+        var totalCount= 0
+        for (var i = 0; i < quantityInputs.length; i++ ){             // loop over all the quantity rows in quantity and increase total with whatever the current quantity for the row is
+            totalCount += parseInt(quantityInputs[i].value)
+        }
+        document.querySelector('.shop-items-count').innerText = totalCount
+    }
+
+
+// add to cart event listner
     var addToCartButtons = document.getElementsByClassName('shop-item-button')
     for (i = 0; i < addToCartButtons.length; i++) {
         var cartButton = addToCartButtons[i]
         cartButton.addEventListener('click', addToCart)
     }
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> 430d6ab (shop ongoing payments)
-
-
-
-=======
->>>>>>> d696e47 (shop ongoing payments)
-=======
->>>>>>> 59d81d8 (shop ongoing payments)
-
-
-
-=======
->>>>>>> 430d6ab (shop ongoing payments)
+// alert user when purchase button is clicked and clear the cart
+    document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseComplete)
 
 
 
@@ -228,7 +250,13 @@ function purchaseComplete(){
     // updateCartCount() //update cart count
     updateCartTotal()   //update total once everything is removed from cart
     updateCartCount() //update cart count
+    updateCartTotal()   //update total once everything is removed from cart
+    updateCartCount() //update cart count
 
+}
+//function toggle cart when shopping cart icon is clicked
+function addCartToBody(){
+    body.classList.toggle('showCart');     //use this class in css to style
 }
 //function toggle cart when shopping cart icon is clicked
 function addCartToBody(){
@@ -250,8 +278,13 @@ function addCartToBody(){
         var price = shopItem.getElementsByClassName('shop-item-price')[0].innerText.replace('Price:', '')
         var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src //get the omage source for our images
         carts.push({title: title, price: price, imageSrc: imageSrc})
+        carts.push({title: title, price: price, imageSrc: imageSrc})
         addItemToCart(title, price, imageSrc)
         updateCartTotal()
+        addCartToMemory()
+    }
+    const addCartToMemory = () => {
+        localStorage.setItem('cart', JSON.stringify(carts))
         addCartToMemory()
     }
     const addCartToMemory = () => {
@@ -293,6 +326,7 @@ function addCartToBody(){
         // our DOMContentLoaded only recognize events that were there when page was first loaded. any buttons added after that wont work. we add another click event to remove the newly added rows from our cart
         updateCartCount()
         updateCartCount()
+        updateCartCount()
 
         cartRow.getElementsByClassName('remove-btn')[0].addEventListener('click', removeCartItem)
         // change quantity when new row's quantity changes
@@ -305,6 +339,7 @@ function addCartToBody(){
             input.value = 1
         }
         updateCartTotal() //change the total cost depending on quantity change
+        updateCartCount() //call the update cart function when the quantity changes.
         updateCartCount() //call the update cart function when the quantity changes.
         updateCartCount() //call the update cart function when the quantity changes.
     }
@@ -328,28 +363,7 @@ function addCartToBody(){
 >>>>>>> 00d14a5 (modified cart)
 <<<<<<< HEAD
             // updateCartCount()
-=======
             updateCartCount()
->>>>>>> d0d5b13 (modified cart)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 5e45e4c (modified cart)
-=======
-            updateCartCount()
->>>>>>> d0d5b13 (modified cart)
-=======
->>>>>>> a341b2f (modified cart)
-=======
->>>>>>> 10340d9 (modified cart)
->>>>>>> 34afa80 (modified cart)
-=======
->>>>>>> 10340d9 (modified cart)
-=======
-=======
->>>>>>> 5e45e4c (modified cart)
->>>>>>> 021eec1 (modified cart)
->>>>>>> 00d14a5 (modified cart)
     }
 // function to update the cart total
     function updateCartTotal() {
@@ -466,33 +480,9 @@ addCartToMemory()
 >>>>>>> 430d6ab (shop ongoing payments)
 =======
 updateCartCount()   //initialize our shopping count function
+updateCartCount()   //initialize our shopping count function
 addCartToMemory()
 
->>>>>>> d0d5b13 (modified cart)
-=======
->>>>>>> a341b2f (modified cart)
-=======
-
->>>>>>> 3944efa (shop ongoing payments)
->>>>>>> d696e47 (shop ongoing payments)
-=======
-<<<<<<< HEAD
->>>>>>> 3944efa (shop ongoing payments)
-=======
-=======
->>>>>>> 5e45e4c (modified cart)
-<<<<<<< HEAD
->>>>>>> 021eec1 (modified cart)
-<<<<<<< HEAD
->>>>>>> 00d14a5 (modified cart)
-=======
-=======
-=======
-
->>>>>>> 3944efa (shop ongoing payments)
->>>>>>> 430d6ab (shop ongoing payments)
->>>>>>> 310d27f (shop ongoing payments)
->>>>>>> 59d81d8 (shop ongoing payments)
 
 
 

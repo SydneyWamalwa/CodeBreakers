@@ -33,8 +33,7 @@ body::-webkit-scrollbar{
     margin: 0 auto;
     position: relative;
     margin-left: 20px;
-    transition: transform .5s;
-
+    /* transition: transform .5s; */
 
 }
 .cart-section{
@@ -59,7 +58,7 @@ body.showCart .cart-section{
     transition: transform .5s ease-out .5s
 }
 body.showCart .grid-container{
-    transform: translatex(-300px);
+    transform: translateX(-10px);
     transition: transform .5s ease-out;
 }
 .section-header{
@@ -108,6 +107,8 @@ body.showCart .grid-container{
 #cart-row {
     position: sticky;
     z-index: 1;
+    top: 40px;
+    background:lightgrey;
 }
 
 
@@ -403,6 +404,10 @@ li:hover{
     display: flex;
     cursor: pointer;
     position: absolute;
+    z-index: 1;
+    right: 0;
+    height: fit-content;
+    width: auto;
 
 }
 .shop-cart-icon svg{
