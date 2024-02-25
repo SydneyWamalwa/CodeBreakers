@@ -1,14 +1,117 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 430d6ab (shop ongoing payments)
+=======
+>>>>>>> d696e47 (shop ongoing payments)
+=======
+>>>>>>> 34afa80 (modified cart)
+=======
+=======
+>>>>>>> 430d6ab (shop ongoing payments)
+>>>>>>> 59d81d8 (shop ongoing payments)
+function handlePayment(){
+    // Retrieve product details
+    var userEmail = 'customer@example.com'; // Get customer's email from your application
+    var description = title; // Example: Get selected size from your application
+    var image = imageSrc; // Example: Get image URL from your application
+
+    // Amount should be calculated based on product price and quantity
+    var price = total; // Example: Get product price from your application
+
+    // Prepare data to send to backend
+    var data = {
+        user_email: userEmail,
+        image: image,
+        price: price,
+        description: description
+    };
+
+    // Make a POST request to the backend to initiate payment processing
+    fetch('/shop_purchased_product', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // Proceed to initiate payment using Paystack popup
+            initiatePayment(data.price, data.image, data.description,data.user_email);
+        } else {
+            // Handle error
+            console.error('Failed to save purchased product details:', data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error saving purchased product details:', error);
+    });
+}
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 59d81d8 (shop ongoing payments)
+=======
+>>>>>>> d0d5b13 (modified cart)
+=======
+>>>>>>> 430d6ab (shop ongoing payments)
+<<<<<<< HEAD
+=======
+>>>>>>> d696e47 (shop ongoing payments)
+=======
+=======
+>>>>>>> d0d5b13 (modified cart)
+>>>>>>> 34afa80 (modified cart)
+=======
+>>>>>>> 59d81d8 (shop ongoing payments)
 
 // DomContentLoaded ensure pages isloaded before JavaScript can Execute
 document.addEventListener('DOMContentLoaded', function() {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 00d14a5 (modified cart)
+=======
+=======
+>>>>>>> 021eec1 (modified cart)
 
+// DomContentLoaded ensure pages isloaded before JavaScript can Execute
+document.addEventListener('DOMContentLoaded', function() {
+>>>>>>> d0d5b13 (modified cart)
+
+=======
+=======
+
+>>>>>>> 34afa80 (modified cart)
     var carts = []
     window.addEventListener('load', function () {
         if (localStorage.getItem('cart')){
             carts = JSON.parse(localStorage.getItem('cart'))
             updateCartTotal()
             updateCartCount()
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             addCartToMemory()
+=======
+>>>>>>> d0d5b13 (modified cart)
+=======
+>>>>>>> d0d5b13 (modified cart)
+=======
+            addCartToMemory()
+=======
+>>>>>>> d0d5b13 (modified cart)
+>>>>>>> 34afa80 (modified cart)
         }
     })
 
@@ -16,6 +119,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // show the cart contents anytime the shopping cart icon is clicked
     //function toggle cart when shopping cart icon is clicked
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5e45e4c (modified cart)
+=======
+>>>>>>> d0d5b13 (modified cart)
+=======
+>>>>>>> a341b2f (modified cart)
+=======
+>>>>>>> 10340d9 (modified cart)
+>>>>>>> 34afa80 (modified cart)
+=======
+>>>>>>> 10340d9 (modified cart)
+=======
+=======
+>>>>>>> 5e45e4c (modified cart)
+>>>>>>> 021eec1 (modified cart)
+>>>>>>> 00d14a5 (modified cart)
     let iconCart = document.querySelector('.shop-cart-container');
     let body = document.querySelector('body');
     iconCart.addEventListener('click', addCartToBody)
@@ -53,8 +175,30 @@ document.addEventListener('DOMContentLoaded', function() {
         var cartButton = addToCartButtons[i]
         cartButton.addEventListener('click', addToCart)
     }
-// alert user when purchase button is clicked and clear the cart
-    document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseComplete)
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+
+
+=======
+>>>>>>> 430d6ab (shop ongoing payments)
+
+
+
+=======
+>>>>>>> d696e47 (shop ongoing payments)
+=======
+>>>>>>> 59d81d8 (shop ongoing payments)
+
+
+
+=======
+>>>>>>> 430d6ab (shop ongoing payments)
+
+
+
 
 
 
@@ -145,24 +289,60 @@ function addCartToBody(){
         var buttonClicked = event.target
             buttonClicked.parentElement.parentElement.remove()
             updateCartTotal()
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 34afa80 (modified cart)
+=======
+=======
+=======
+>>>>>>> 021eec1 (modified cart)
+>>>>>>> 00d14a5 (modified cart)
+<<<<<<< HEAD
             // updateCartCount()
+=======
+            updateCartCount()
+>>>>>>> d0d5b13 (modified cart)
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5e45e4c (modified cart)
+=======
+            updateCartCount()
+>>>>>>> d0d5b13 (modified cart)
+=======
+>>>>>>> a341b2f (modified cart)
+=======
+>>>>>>> 10340d9 (modified cart)
+>>>>>>> 34afa80 (modified cart)
+=======
+>>>>>>> 10340d9 (modified cart)
+=======
+=======
+>>>>>>> 5e45e4c (modified cart)
+>>>>>>> 021eec1 (modified cart)
+>>>>>>> 00d14a5 (modified cart)
     }
 // function to update the cart total
     function updateCartTotal() {
     // cart-items is the container class for all our rows. access it and get the very first element from the list[0]
         var cartItemContainer = document.getElementsByClassName('cart-items')[0]
-        
+
         // inside items class get all the rows
         var cartRows = cartItemContainer.getElementsByClassName('cart-row')
         total = 0
         // loop over cart-rows. we only need quantity and price columns
         for (i = 0; i < cartRows.length; i++) {
             var cartRow = cartRows[i] //get a single row from the item rows
-        
+
             // get the price and quantity elements from the row using their class names. get the very first one.
             var priceElement = cartRow.getElementsByClassName('cart-price-details')[0]
             var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0]
-            
+
             // extract the text from an element using innertext. use replace to get rid of currency and float to convert to number
             var price = parseFloat(priceElement.innerText.replace('Ksh.', ''))
             var quantity = quantityElement.value
@@ -172,9 +352,6 @@ function addCartToBody(){
         // get the cart total using its class name and change its text to above total using innertext
         document.getElementsByClassName('cart-total-price')[0].innerText = 'Ksh.' + total
     }
-updateCartCount()   //initialize our shopping count function
-
-
 
 
 

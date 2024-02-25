@@ -12,6 +12,7 @@
             margin: 0;
             font-family: 'Arial', sans-serif;
             background-color: #f8f8f8;
+            background-image: url('/static/images/van\ gogh.jpg');
         }
 
         #container {
@@ -211,6 +212,27 @@ nav a:hover {
     .close:hover {
         color: red;
     }
+
+    .popup-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    touch-action: manipulation; /* Add this line */
+}
+
+.design-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* This creates 2 columns of equal width */
+    grid-gap: 20px;
+}
+
     </style>
 </head>
 
@@ -229,8 +251,8 @@ nav a:hover {
         <div id="color-options">
             <h2>Color-Options</h2>
             <div>
-            <button onclick="changeShirtColor('/static/images/wt.jpeg', 'White')" class="btn"><img src="/static/images/wt.jpeg" alt="White T-Shirt" width="60px" height="60px"></button>
-            <button onclick="changeShirtColor('/static/images/blt.jpeg', 'Black')" class="btn"><img src="/static/images/blt.jpeg" alt="Black T-Shirt" width="60px" height="60px"></button>
+            <button data-color-option="White" onclick="changeShirtColor('/static/images/wt.jpeg', 'White')" class="btn"><img src="/static/images/wt.jpeg" alt="White T-Shirt" width="60px" height="60px"></button>
+            <button data-color-option="Black" onclick="changeShirtColor('/static/images/blt.jpeg', 'Black')" class="btn"><img src="/static/images/blt.jpeg" alt="Black T-Shirt" width="60px" height="60px"></button>
             <!-- Add more color options as needed -->
         </div>
             <div>
@@ -255,20 +277,34 @@ nav a:hover {
             <div class="design-section">
                 <h2>Designs</h2>
             <!-- Add drag-and-drop designs here -->
-            <div>
+            <div class="design-grid">
+            <textarea id="textbox" rows="4" cols="50" class="design" placeholder="Enter Text..."></textarea>
             <img class="design" src="/static/images/d1.jpeg" alt="Design 1" width="100px" height="100px">
             <img class="design" src="/static/images/d2.jpg" alt="Design 2" width="100px" height="100px">
-        </div>
+            <img class="design" src="/static/images/Ye.jpg" alt="Design 2" width="100px" height="100px">
+            <img class="design" src="/static/images/Indicud.jpg" alt="Design 2" width="100px" height="100px">
+            <img class="design" src="/static/images/art1.jpg" alt="Design 2" width="100px" height="100px">
+            <img class="design" src="/static/images/art2.webp" alt="Design 2" width="100px" height="100px">
+            <img class="design" src="/static/images/Grad.jpg" alt="Design 2" width="100px" height="100px">
+
+            </div>
             </div>
         </div>
     </div>
 
     <div id="purchasePopup" class="popup-container">
         <div class="popup-content">
+            <!-- Inside the popup-content div -->
+<div id="selectedColorDisplay" style="width: 30px; height: 30px; border: 1px solid #ccc; margin-top: 5px;"></div>
+
             <span class="close" onclick="closePurchasePopup()">&times;</span>
             <form id="emailForm">
                 <label for="userEmailInput">Enter your email:</label>
                 <input type="email" id="userEmailInput" required>
+                <input type="hidden" id="size">
+                <!-- Inside the popup-content div -->
+                <label for="colorPicker">Select Color:</label>
+                <input type="color" id="colorPicker" value="#ffffff" onchange="updateSelectedColor(this.value)">
                 <button type="button" onclick="initiatePayment()">Continue to Purchase</button>
             </form>
         </div>
@@ -278,6 +314,25 @@ nav a:hover {
         <button onclick="saveCustomDesign()" type="button">Save Custom Design</button>
         <button onclick="showPurchasePopup()" type="button">Purchase</button>
     </div>
+
+    <!-- Add this markup to your HTML file -->
+    <div id="textOptionsPopup" class="popup-container">
+        <div class="popup-content">
+            <span class="close" onclick="closeTextOptionsPopup()">&times;</span>
+            <label for="fontSelect">Font:</label>
+            <select id="fontSelect">
+                <option value="Arial">Arial</option>
+                <option value="Verdana">Verdana</option>
+                <option value="times"></option>
+                <!-- Add more font options as needed -->
+            </select>
+            <label for="boldCheckbox">Bold:</label>
+            <input type="checkbox" id="boldCheckbox" onchange="toggleBold()">
+            <input type="color" id="textColorInput" onchange="changeTextColor(this.value)">
+            <button onclick="bendText()">Bend Text</button>
+        </div>
+    </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/dragula/dist/dragula.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
@@ -419,6 +474,165 @@ nav a:hover {
                         }
                     });
             }
+
+            function createTextClone(text) {
+        const newText = document.createElement('div');
+        newText.textContent = text;
+        newText.classList.add('text-clone');
+        newText.style.position = 'absolute';
+        newText.style.top = '50%'; // Adjust position as needed
+        newText.style.left = '50%'; // Adjust position as needed
+        newText.style.transform = 'translate(-50%, -50%)'; // Center the text
+
+        // Make the text clone draggable and resizable using interact.js
+        interact(newText).draggable({
+            listeners: {
+                move(event) {
+                    const target = event.target;
+                    const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
+                    const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+                    // Translate the element
+                    target.style.webkitTransform = target.style.transform = `translate(${x}px, ${y}px)`;
+
+                    // Update the element's position attributes
+                    target.setAttribute('data-x', x);
+                    target.setAttribute('data-y', y);
+                }
+            }
+        }).resizable({
+            edges: { left: true, right: true, top: true, bottom: true },
+            listeners: {
+                move(event) {
+                    const target = event.target;
+                    const x = (parseFloat(target.getAttribute('data-x')) || 0);
+                    const y = (parseFloat(target.getAttribute('data-y')) || 0);
+
+                    // Resize the element
+                    target.style.width = event.rect.width + 'px';
+                    target.style.height = event.rect.height + 'px';
+
+                    // Translate the element to adjust for resizing from the top or left
+                    target.style.transform = `translate(${x}px, ${y}px)`;
+
+                    // Update the font size based on the resize
+                    const fontSize = Math.min(event.rect.width, event.rect.height) * 0.8; // Adjust this factor as needed
+                    target.style.fontSize = fontSize + 'px';
+                }
+            }
+        });
+
+        // Append a link for editing text
+    const editLink = document.createElement('a');
+    editLink.textContent = 'Edit Text';
+    editLink.href = '#'; // Set href to "#" as a placeholder
+    editLink.onclick = function() {
+        showTextOptionsPopup(newText); // Call function to show popup for text editing
+        return false; // Prevent default link behavior
+    };
+    newText.appendChild(editLink);
+
+    newText.addEventListener('mouseenter', function() {
+        editLink.style.display = 'inline'; // Show the link on mouse enter
+    });
+
+    newText.addEventListener('mouseleave', function() {
+        editLink.style.display = 'none'; // Hide the link on mouse leave
+    });
+
+        tshirtContainer.appendChild(newText);
+    }
+
+    // Event listener for text input
+    const textBox = document.getElementById('textbox');
+    textBox.addEventListener('input', function () {
+        const text = textBox.value;
+        // Remove any existing text clones on the canvas
+        const existingTextClones = document.querySelectorAll('.text-clone');
+        existingTextClones.forEach(clone => clone.remove());
+        // Create a new text clone with the entered text
+        createTextClone(text);
+    });
+
+    // Function to handle font change
+    function changeFont(font) {
+        const textClones = document.querySelectorAll('.text-clone');
+        textClones.forEach(clone => {
+            clone.style.fontFamily = font;
+        });
+    }
+
+    // Function to handle text color change
+    function changeTextColor(color) {
+        const textClones = document.querySelectorAll('.text-clone');
+        textClones.forEach(clone => {
+            clone.style.color = color;
+        });
+    }
+
+    // Function to handle bold text
+    function toggleBold() {
+        const textClones = document.querySelectorAll('.text-clone');
+        textClones.forEach(clone => {
+            clone.style.fontWeight = clone.style.fontWeight === 'bold' ? 'normal' : 'bold';
+        });
+    }
+
+    // Event listeners for font, text color, and bold change
+    const fontSelect = document.getElementById('font-select');
+    const textColorInput = document.getElementById('text-color-input');
+    const boldButton = document.getElementById('bold-button');
+
+    fontSelect.addEventListener('change', function () {
+        changeFont(this.value);
+    });
+
+    textColorInput.addEventListener('input', function () {
+        changeTextColor(this.value);
+    });
+
+    boldButton.addEventListener('click', function () {
+        toggleBold();
+    });
+
+    // Add dragstart event listener to the text box
+    textBox.addEventListener('dragstart', function (event) {
+        event.dataTransfer.setData('text/plain', ''); // Required for Firefox
+        selectedText = event.target;
+    });
+
+    // Add dragover event listener to the tshirt container
+    tshirtContainer.addEventListener('dragover', function (event) {
+        event.preventDefault();
+    });
+
+    // Add drop event listener to the tshirt container
+    tshirtContainer.addEventListener('drop', function (event) {
+        event.preventDefault();
+
+        if (selectedText) {
+            // Get the bounding rectangle of the T-shirt canvas
+            const tshirtRect = tshirtContainer.getBoundingClientRect();
+
+            // Calculate the position relative to the T-shirt canvas
+            const offsetX = event.clientX - tshirtRect.left;
+            const offsetY = event.clientY - tshirtRect.top;
+
+            // Clone the original text box and append it to the T-shirt container
+            const newText = selectedText.cloneNode(true);
+            newText.removeAttribute('id'); // Remove id to prevent duplication
+            newText.classList.remove('text-clone');
+            tshirtContainer.appendChild(newText);
+
+            // Update the position of the new text element
+            newText.style.position = 'absolute';
+            newText.style.left = offsetX + 'px';
+            newText.style.top = offsetY + 'px';
+
+            selectedText = null;
+        }
+    });
+
         });
 
 
@@ -438,55 +652,266 @@ nav a:hover {
         const userEmailInput = document.getElementById('userEmailInput');
         return userEmailInput.value;
     }
-//paystack code
-    function initiatePayment() {
-        const userEmail = getUserEmail();
 
-        // Replace 'your_public_key' with your actual Paystack public key
-        const publicKey = 'your_public_key';
-        const amountInKobo = 1500 * 100; // Set the price to Ksh.1500
-
-        // Initialize Paystack
-        const handler = PaystackPop.setup({
-            key: publicKey,
-            email: userEmail,
-            amount: amountInKobo,
-            currency: 'KES',
-            ref: 'pay_' + Date.now(),
-            callback: function (response) {
-                console.log('Payment successful. Transaction reference: ' + response.reference);
-                savePurchasedProduct(userEmail, 1500);
-            },
-            onClose: function () {
-                console.log('Payment closed without completing.');
-            }
-        });
-
-        handler.openIframe();
+    // Function to get the selected size
+function getSelectedSize() {
+    const sizeButtons = document.querySelectorAll('.sizes p');
+    for (const button of sizeButtons) {
+        if (button.classList.contains('selected')) {
+            return button.innerText;
+        }
     }
+    // Return a default size or handle the case where no size is selected
+    return 'Medium';
+}
 
 
-//saving purchase script
-    function savePurchasedProduct(userEmail, price) {
-        fetch('/save_purchased_product', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                userEmail: userEmail,
-                price: price,
-            }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('T-shirt details saved:', data);
-            // Optionally handle the response from the server
+// Function to handle size button click
+function handleSizeButtonClick(button) {
+    const sizeButtons = document.querySelectorAll('.sizes p');
+    for (const sizeButton of sizeButtons) {
+        sizeButton.classList.remove('selected');
+    }
+    button.classList.add('selected');
+}
+
+// Attach event listeners to size buttons
+const sizeButtons = document.querySelectorAll('.sizes p');
+for (const sizeButton of sizeButtons) {
+    sizeButton.addEventListener('click', function () {
+        handleSizeButtonClick(this);
+    });}
+
+       // Function to capture the canvas screenshot
+function captureCanvasScreenshot() {
+    const canvasContainer = document.getElementById('canvas-container');
+
+    return domtoimage.toPng(canvasContainer)
+        .then(dataUrl => {
+            return dataUrl;
         })
         .catch(error => {
-            console.error('Error saving T-shirt details:', error);
+            console.error('Error capturing canvas content:', error);
+            return null;
         });
+}
+
+// Modified initiatePayment function
+// Function to get the selected color from the color picker
+function getSelectedColor() {
+    const colorPicker = document.getElementById('colorPicker');
+    return colorPicker.value;
+}
+
+// Modified initiatePayment function
+function initiatePayment() {
+    const userEmail = getUserEmail();
+    const selectedSize = getSelectedSize();
+    const selectedColor = getSelectedColor();
+
+    if (selectedColor) {
+        // Capture canvas screenshot before initiating payment
+        captureCanvasScreenshot().then(screenshotUrl => {
+            const imageUrl = getSelectedImageUrl();
+
+            const publicKey = 'pk_test_72adfba481a29bf8d587280ca7d96002ac4210c4';
+            const amountInKobo = 1500 * 100;
+
+            const handler = PaystackPop.setup({
+                key: publicKey,
+                email: userEmail,
+                amount: amountInKobo,
+                currency: 'KES',
+                ref: 'pay_' + Date.now(),
+                callback: function (response) {
+                    console.log('Payment successful. Transaction reference: ' + response.reference);
+
+                    // Save purchased product details to the server
+                    savePurchasedProduct(userEmail, selectedSize, selectedColor, imageUrl, screenshotUrl);
+
+                    showPurchasePopup();
+                },
+                onClose: function () {
+                    console.log('Payment closed without completing.');
+                }
+            });
+
+            handler.openIframe();
+        });
+    } else {
+        console.error('Color option not selected');
     }
+}
+
+    // Function to update the selected color
+function updateSelectedColor(color) {
+    const selectedColorDisplay = document.getElementById('selectedColorDisplay');
+    selectedColorDisplay.style.backgroundColor = color;
+}
+
+// Function to save purchased product details
+// Function to save purchased product details
+function savePurchasedProduct(userEmail, size, colorOption, imageUrl, screenshotUrl) {
+    const colorCode = getSelectedColor();
+    // Send data to the server using Fetch API
+    fetch('/save_purchased_product', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            user_email: userEmail,
+            size: size,
+            color_option: colorOption,
+            color_code: colorCode,
+            image_url: imageUrl,
+            screenshot_url: screenshotUrl,
+            price: 1500, // Assuming a fixed price for the T-shirt
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Server response:', data);
+        if (data.status === 'success') {
+            // Redirect to display2 page with the product ID
+            window.location.href = `/display2/${data.product_id}`;  // Assuming your response includes the product_id
+        } else {
+            console.error('Error saving purchased product details:', data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error sending data to the server:', error);
+    });
+}
+
+
+// Function to get the selected image URL
+function getSelectedImageUrl() {
+    const tshirt = document.getElementById('tshirt');
+    const backgroundImage = window.getComputedStyle(tshirt).backgroundImage;
+
+    // Extract the URL from the 'url("...")' string
+    const imageUrl = backgroundImage.slice(5, -2);
+
+    return imageUrl;
+}
+
+
+
+// Inside showPopupForText function
+
+// Get font select, bold checkbox, and text color input elements
+const fontSelect = document.getElementById('fontSelect');
+const boldCheckbox = document.getElementById('boldCheckbox');
+const textColorInput = document.getElementById('textColorInput');
+
+// Add event listeners to font select, bold checkbox, and text color input
+fontSelect.addEventListener('change', function() {
+    changeFont(this.value); // Call changeFont function when font is changed
+});
+
+boldCheckbox.addEventListener('change', function() {
+    toggleBold(); // Call toggleBold function when bold checkbox is toggled
+});
+
+textColorInput.addEventListener('input', function() {
+    changeTextColor(this.value); // Call changeTextColor function when text color is changed
+});
+
+// Function to handle font change
+function changeFont(font) {
+    const selectedText = document.querySelector('.text-clone');
+    if (selectedText) {
+        selectedText.style.fontFamily = font;
+    }
+}
+
+// Function to handle toggling bold
+function toggleBold() {
+    const selectedText = document.querySelector('.text-clone');
+    if (selectedText) {
+        selectedText.style.fontWeight = selectedText.style.fontWeight === 'bold' ? 'normal' : 'bold';
+    }
+}
+
+// Function to handle text color change
+function changeTextColor(color) {
+    const selectedText = document.querySelector('.text-clone');
+    if (selectedText) {
+        selectedText.style.color = color;
+    }
+}
+
+
+// Function to handle bending text (example)
+// Function to bend the text
+// Function to bend the text
+function bendText() {
+    const selectedText = document.querySelector('.text-clone');
+    if (!selectedText) return;
+
+    // Get the text content
+    const text = selectedText.textContent;
+    const length = text.length;
+
+    // Calculate the angle increment for distributing characters along the semi-circle
+    const angleIncrement = Math.PI / (length + 1);
+
+    // Initial angle
+    let angle = Math.PI / 2 - angleIncrement; // Start from the top
+
+    // Radius of the semi-circle
+    const radius = 100; // Adjust as needed
+
+    // Set the text to be transparent
+    selectedText.style.opacity = '0';
+
+    // Iterate over each character, position them along the semi-circle
+    for (let i = 0; i < length; i++) {
+        const character = text[i];
+        const span = document.createElement('span');
+        span.textContent = character;
+
+        // Calculate the position along the semi-circle using polar coordinates
+        const x = Math.cos(angle) * radius;
+        const y = Math.sin(angle) * radius;
+
+        // Apply positioning and rotation
+        span.style.position = 'absolute';
+        span.style.left = `${50 + x}px`; // Center horizontally
+        span.style.top = `${150 + y}px`; // Adjust vertical position as needed
+        const rotation = angle - Math.PI / 2; // Reverse rotation direction
+        span.style.transform = `rotate(${rotation}rad)`;
+
+        // Append the span to the original text
+        selectedText.appendChild(span);
+
+        // Increment angle for the next character
+        angle -= angleIncrement; // Decrease angle for downward curve
+    }
+}
+
+
+
+
+
+
+// Function to show the text options popup
+function showTextOptionsPopup() {
+    console.log('Showing popup...');
+    const textOptionsPopup = document.getElementById('textOptionsPopup');
+    textOptionsPopup.style.display = 'block';
+}
+
+// Function to close the text options popup
+function closeTextOptionsPopup() {
+    console.log('Closing popup...');
+    const textOptionsPopup = document.getElementById('textOptionsPopup');
+    textOptionsPopup.style.display = 'none';
+}
+
+
+
 
     </script>
 </div>

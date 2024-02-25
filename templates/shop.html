@@ -15,16 +15,16 @@
     <div class="grid-container">
         <header class="header">
             <div class="brand">
-                <img src="/static/images/RG2.png" class="brand-logo" alt="logo">
+                <img src="/static/images/logo.jpg" class="brand-logo" alt="logo">
                 <span class="brand-name">PopKulture</span>
             </div>
             <div class="navbar">
-                <ul>
-                    <li><a href="#">shop</a></li>
-                    <li><a href="/add_product">Create it</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
+                <nav>
+                    <a href="#">shop</a>
+                    <a href="/">Create it</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Contact</a>
+                </nav>
             </div>
             <div class="shopping">
                 <div class="shop-cart-container">
@@ -42,16 +42,49 @@
                     <span class="cart-product cart-header cart-column">PRODUCT</span>
                     <span class="cart-color cart-header cart-column">COLOR</span>
                     <span class="cart-quantity cart-header cart-column">QUANTITY</span>
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 24d9b19 (merging conflict)
+=======
+<<<<<<< HEAD
+
+
+=======
+<<<<<<< HEAD
+>>>>>>> 2e2c195 (merging conflict)
+=======
+
+
+=======
+>>>>>>> 7132b7c (merging conflict)
+=======
+>>>>>>> 92ecaaa (merging conflict)
+>>>>>>> 24d9b19 (merging conflict)
                     <span class="cart-price cart-header cart-column">PRICE</span>
                 </div>
                 <div class="cart-items">
                 </div>
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d57bf5d (merging conflict)
+>>>>>>> 2e2c195 (merging conflict)
+=======
+>>>>>>> d57bf5d (merging conflict)
+>>>>>>> 7132b7c (merging conflict)
+=======
+=======
+>>>>>>> d57bf5d (merging conflict)
+>>>>>>> 92ecaaa (merging conflict)
+>>>>>>> 24d9b19 (merging conflict)
                 <div class="cart-total">
                     <strong class="cart-total-title">Total</strong>
                     <span class="cart-total-price">Ksh.0</span>
                 </div>
-                <button class="btn btn-primary btn-purchase" id="purchaseBtn" type="button">PURCHASE</button>
-
+                <button class="btn btn-primary btn-purchase" type="button" onclick="handlePayment()">PURCHASE</button>
             </section>
 
             {% for record in records %}
@@ -72,17 +105,7 @@
         </main>
         <footer>Footer</footer>
     </div>
-<div id="paymentModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closePaymentModal()">&times;</span>
-        <h2>Enter Your Email Address</h2>
-        <form id="paymentForm">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <button type="submit" onclick="processPayment()">Proceed to Payment</button>
-        </form>
-    </div>
-</div>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
 
 </body>
 </html>
