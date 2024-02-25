@@ -72,9 +72,22 @@ function handlePayment(){
 >>>>>>> 34afa80 (modified cart)
 =======
 >>>>>>> 59d81d8 (shop ongoing payments)
+<<<<<<< HEAD
+=======
+
+
+// Validate email function
+function validateEmail(email) {
+var regex = /\S+@\S+\.\S+/;
+return regex.test(email);
+}
+
+>>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
+
 
 // DomContentLoaded ensure pages isloaded before JavaScript can Execute
 document.addEventListener('DOMContentLoaded', function() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -92,6 +105,13 @@ document.addEventListener('DOMContentLoaded', function() {
 =======
 =======
 
+=======
+>>>>>>> d0d5b13 (modified cart)
+
+=======
+=======
+
+>>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
 >>>>>>> 34afa80 (modified cart)
     var carts = []
     window.addEventListener('load', function () {
@@ -114,11 +134,44 @@ document.addEventListener('DOMContentLoaded', function() {
 >>>>>>> 34afa80 (modified cart)
         }
     })
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+    // window.addEventListener('load', function () {
+    //     if (localStorage.getItem('cart')){
+    //         carts = JSON.parse(localStorage.getItem('cart'))
+    //         updateCartTotal()
+    //         updateCartCount()
+    //     }
+    // })
+>>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
 
 
 
     // show the cart contents anytime the shopping cart icon is clicked
     //function toggle cart when shopping cart icon is clicked
+<<<<<<< HEAD
+=======
+
+    var carts = []
+    window.addEventListener('load', function () {
+        if (localStorage.getItem('cart')){
+            carts = JSON.parse(localStorage.getItem('cart'))
+            updateCartTotal()
+            updateCartCount()
+        }
+    })
+
+
+
+    // show the cart contents anytime the shopping cart icon is clicked
+    //function toggle cart when shopping cart icon is clicked
+>>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -141,7 +194,11 @@ document.addEventListener('DOMContentLoaded', function() {
     let iconCart = document.querySelector('.shop-cart-container');
     let body = document.querySelector('body');
     iconCart.addEventListener('click', addCartToBody)
+    iconCart.addEventListener('click', addCartToBody)
+    iconCart.addEventListener('click', addCartToBody)
 
+    // removing items from cart event listener
+    // removing items from cart event listener
     // removing items from cart event listener
     var removeCartItemButtons = document.getElementsByClassName('remove-btn') // loop over all buttons in the cart and add an event listner for whatever index the button is currently on
     for (i = 0; i < removeCartItemButtons.length; i++) {
@@ -149,6 +206,13 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', removeCartItem) //call the function on a click event
 }
 
+<<<<<<< HEAD
+=======
+// quantity change event listener
+
+// quantity change event lister
+
+>>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
 // quantity change event lister
 // update total when quantity value changes by listening for change event
     var quantityInputs = document.getElementsByClassName('cart-quantity-input')
@@ -169,12 +233,44 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
+<<<<<<< HEAD
+=======
+// add to cart event listener
+
+    // This function uses the quantity input variable in line 18 to get quantityInputs
+    // function to update the number inside the shopping cart with total number of products everytime the quanity changes.
+    function updateCartCount(){
+        // var quantityInputs = document.getElementsByClassName('cart-quantity-input')
+        var totalCount= 0
+        for (var i = 0; i < quantityInputs.length; i++ ){             // loop over all the quantity rows in quantity and increase total with whatever the current quantity for the row is
+            totalCount += parseInt(quantityInputs[i].value)
+        }
+        document.querySelector('.shop-items-count').innerText = totalCount
+    }
+
+
+// add to cart event listner
+
+    // This function uses the quantity input variable in line 18 to get quantityInputs
+    // function to update the number inside the shopping cart with total number of products everytime the quanity changes.
+    function updateCartCount(){
+        // var quantityInputs = document.getElementsByClassName('cart-quantity-input')
+        var totalCount= 0
+        for (var i = 0; i < quantityInputs.length; i++ ){             // loop over all the quantity rows in quantity and increase total with whatever the current quantity for the row is
+            totalCount += parseInt(quantityInputs[i].value)
+        }
+        document.querySelector('.shop-items-count').innerText = totalCount
+    }
+
+
+>>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
 // add to cart event listner
     var addToCartButtons = document.getElementsByClassName('shop-item-button')
     for (i = 0; i < addToCartButtons.length; i++) {
         var cartButton = addToCartButtons[i]
         cartButton.addEventListener('click', addToCart)
     }
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -199,6 +295,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+=======
+// alert user when purchase button is clicked and clear the cart
+    document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseComplete)
+>>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
 
 
 
@@ -209,9 +309,24 @@ function purchaseComplete(){
     while (cartItems.hasChildNodes()){                                 //if the cart still has any children 'rows' keep running until they are all removed
         cartItems.removeChild(cartItems.firstChild)
     }
+<<<<<<< HEAD
+=======
+    // updateCartTotal()   //update total once everything is removed from cart
+    // updateCartCount() //update cart count
+    updateCartTotal()   //update total once everything is removed from cart
+    updateCartCount() //update cart count
+>>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
     updateCartTotal()   //update total once everything is removed from cart
     updateCartCount() //update cart count
 
+}
+//function toggle cart when shopping cart icon is clicked
+function addCartToBody(){
+    body.classList.toggle('showCart');     //use this class in css to style
+}
+//function toggle cart when shopping cart icon is clicked
+function addCartToBody(){
+    body.classList.toggle('showCart');     //use this class in css to style
 }
 //function toggle cart when shopping cart icon is clicked
 function addCartToBody(){
@@ -229,12 +344,23 @@ function addCartToBody(){
         var price = shopItem.getElementsByClassName('shop-item-price')[0].innerText.replace('Price:', '')
         var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src //get the omage source for our images
         carts.push({title: title, price: price, imageSrc: imageSrc})
+<<<<<<< HEAD
+=======
+        carts.push({title: title, price: price, imageSrc: imageSrc})
+>>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
         addItemToCart(title, price, imageSrc)
         updateCartTotal()
         addCartToMemory()
     }
     const addCartToMemory = () => {
         localStorage.setItem('cart', JSON.stringify(carts))
+<<<<<<< HEAD
+=======
+        addCartToMemory()
+    }
+    const addCartToMemory = () => {
+        localStorage.setItem('cart', JSON.stringify(carts))
+>>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
     }
 // add items for purchase to cart
     function addItemToCart(title, price, imageSrc){
@@ -270,6 +396,8 @@ function addCartToBody(){
         cartItems.appendChild(cartRow) //add the new row to cart-items element
         // our DOMContentLoaded only recognize events that were there when page was first loaded. any buttons added after that wont work. we add another click event to remove the newly added rows from our cart
         updateCartCount()
+        updateCartCount()
+        updateCartCount()
 
         cartRow.getElementsByClassName('remove-btn')[0].addEventListener('click', removeCartItem)
         // change quantity when new row's quantity changes
@@ -282,6 +410,8 @@ function addCartToBody(){
             input.value = 1
         }
         updateCartTotal() //change the total cost depending on quantity change
+        updateCartCount() //call the update cart function when the quantity changes.
+        updateCartCount() //call the update cart function when the quantity changes.
         updateCartCount() //call the update cart function when the quantity changes.
     }
 // function to remove item from the cart
@@ -304,6 +434,7 @@ function addCartToBody(){
 >>>>>>> 00d14a5 (modified cart)
 <<<<<<< HEAD
             // updateCartCount()
+<<<<<<< HEAD
 =======
             updateCartCount()
 >>>>>>> d0d5b13 (modified cart)
@@ -326,6 +457,9 @@ function addCartToBody(){
 >>>>>>> 5e45e4c (modified cart)
 >>>>>>> 021eec1 (modified cart)
 >>>>>>> 00d14a5 (modified cart)
+=======
+            updateCartCount()
+>>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
     }
 // function to update the cart total
     function updateCartTotal() {
@@ -352,6 +486,102 @@ function addCartToBody(){
         // get the cart total using its class name and change its text to above total using innertext
         document.getElementsByClassName('cart-total-price')[0].innerText = 'Ksh.' + total
     }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+updateCartCount()   //initialize our shopping count function
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 00d14a5 (modified cart)
+=======
+>>>>>>> 59d81d8 (shop ongoing payments)
+=======
+=======
+>>>>>>> 021eec1 (modified cart)
+=======
+>>>>>>> 310d27f (shop ongoing payments)
+updateCartCount()   //initialize our shopping count function
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 430d6ab (shop ongoing payments)
+=======
+=======
+updateCartCount()   //initialize our shopping count function
+>>>>>>> d696e47 (shop ongoing payments)
+=======
+<<<<<<< HEAD
+>>>>>>> 34afa80 (modified cart)
+=======
+=======
+=======
+updateCartCount()   //initialize our shopping count function
+>>>>>>> 430d6ab (shop ongoing payments)
+>>>>>>> 59d81d8 (shop ongoing payments)
+
+
+function initiatePayment(price) {
+    // Use Paystack API to initiate payment
+    // Example code for Paystack popup setup
+    // Replace 'publicKey' with your actual Paystack public key
+    // Replace other placeholder values with actual data
+    const publicKey = 'pk_test_72adfba481a29bf8d587280ca7d96002ac4210c4';
+    const amountInKobo = price * 100;
+
+    const handler = PaystackPop.setup({
+        key: publicKey,
+        email: userEmail,
+        amount: amountInKobo,
+        currency: 'KES',
+        ref: 'pay_' + Date.now(),
+        callback: function(response) {
+            console.log('Payment successful. Transaction reference: ' + response.reference);
+
+            // Handle payment success
+            // You can perform additional actions here
+        },
+        onClose: function() {
+            console.log('Payment closed without completing.');
+        }
+    });
+
+    handler.openIframe();
+}
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 59d81d8 (shop ongoing payments)
+=======
+addCartToMemory()
+>>>>>>> d0d5b13 (modified cart)
+
+<<<<<<< HEAD
+=======
+>>>>>>> 5e45e4c (modified cart)
+=======
+=======
+=======
+addCartToMemory()
+>>>>>>> d0d5b13 (modified cart)
+>>>>>>> 34afa80 (modified cart)
+
+>>>>>>> 3944efa (shop ongoing payments)
+>>>>>>> 430d6ab (shop ongoing payments)
+=======
+updateCartCount()   //initialize our shopping count function
+updateCartCount()   //initialize our shopping count function
+addCartToMemory()
+
+>>>>>>> 83dbde088ad0a6f84bb51c64ae1dd8b2df6d7f1d
 
 
 
