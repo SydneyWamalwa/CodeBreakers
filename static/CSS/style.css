@@ -32,6 +32,7 @@ body::-webkit-scrollbar{
     margin-left: 20px;
     transition: transform .5s;
 
+
 }
 .cart-section{
     position: fixed;
@@ -72,13 +73,7 @@ body.showCart .grid-container{
 }
 
 
-.shop-cart-container{
-    cursor: pointer;
-    position: absolute;
-    top: -14px;
-    margin-top: -15px;
-    left: 190px;
-}
+
 
 
 .cart-column {
@@ -99,12 +94,13 @@ body.showCart .grid-container{
     display: flex;
     justify-content: space-between;
     border: 1px solid #000;
+    
+    top: 40px;
+    background:lightgrey;
 }
 #cart-row {
     position: sticky;
     z-index: 1;
-    top: 40px;
-    background:lightgrey;
 }
 
 
@@ -185,8 +181,8 @@ body.showCart .grid-container{
     font-size: 1.1em;
 }
 .cart-quantity-input{
-    height: 34px;
-    width: 34px;
+    height: auto;
+    width: 65px;
     border-radius: 5px;
     border: 1px solid #56CCF2;
     background-color: #eee;
@@ -196,6 +192,7 @@ body.showCart .grid-container{
     font-size: 1.2em;
 }
 .remove-btn{
+    width: auto;
     font-size: 1.2em;
     margin: 5px;
     padding: 5px;
@@ -232,7 +229,7 @@ body.showCart .grid-container{
 
 header{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(12, 1fr);
     grid-auto-rows: auto;
     grid-column: 1 / 13;
     background: #fff;
@@ -240,17 +237,73 @@ header{
     align-items: center;
     justify-content: space-between;
 }
+
+.popktr-header__menu-button{
+    grid-column: 12 / 13;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 8px 10px;
+    margin: 0 0 0 -4px;
+    width: 52px;
+    height: 100%;
+    border-right: 2px solid #f2f2f2;
+    background: #fff;
+    user-select: none;
+}
+
+.popktr-header__menu-button .burger-menu{
+    width: 20px;
+    height: 20px;
+    position:relative;
+}
+.popktr-header__menu-button .burger-menu div:nth-child(1){
+    top: 4px;
+}
+.popktr-header__menu-button .burger-menu div:nth-child(2){
+    top: 4px;
+}
+.popktr-header__menu-button .burger-menu div:nth-child(3){
+    top: 10px;
+}
+.popktr-header__menu-button .burger-menu div:nth-child(4){
+    top: 16px;
+}
+.popktr-header__menu-button .burger-menu div{
+    display: block;
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background: #333;
+    border-radius: 9px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0);
+    transition: .15s ease-in-out;
+    display: none;
+}
+
 .brand{
+    grid-column: 1 / 4;
     display: flex;
     align-items: center;
     justify-content: start;
+    justify-self: center;
 }
 .brand-logo{
     width: 50px;
     height: 50px;
 }
+.brand-name {
+    align-items: center;
+    justify-content: center;
+    
+}
 
 .navbar {
+    grid-column: 5 / 9;
     width: auto;
 
 }
@@ -269,18 +322,16 @@ li:hover{
     transform: scale(1.5);
 }
 .shopping{
+    grid-column: 10 / 11;
     display: flex;
     align-items: center;
-    position: relative;
-    justify-content: end;
+    justify-content: center;
 }
-.shop-cart-icon{
+.shop-cart-container{
+    display: flex;
+    cursor: pointer;
     position: absolute;
-    z-index: 1;
-    right: 0;
-    height: fit-content;
-    width: auto;
-    
+
 }
 .shop-cart-icon svg{
     width: 48px;
@@ -419,4 +470,46 @@ main{
 
 #paymentModal button:hover {
     background-color: #006400;
+}
+
+
+/* @media only screen and (max-width: 768px){
+    body {
+
+    }
+} */
+@media (max-width: 768px) {
+    .navbar {
+        display: none; /* Hide the navbar on small screens */
+        position: absolute;
+        top: 60px; /* Adjust the top position as needed */
+        right: 0;
+        background-color: #fff; /* Adjust the background color as needed */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add box-shadow */
+        width: 100%;
+        grid-column: 1 / 13;
+    }
+
+    .navbar ul {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .navbar li {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .popktr-header__menu-button {
+        display: block; /* Show the burger menu on small screens */
+        background: red;
+        /* grid-column: span 4; */
+    }
+    .shopping{
+        /* grid-column: 10 / 11; */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
 }
