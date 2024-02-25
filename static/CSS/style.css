@@ -7,9 +7,6 @@ body {
     max-width: 90%;
     width: 900px;
     margin: auto;
-    max-width: 90%;
-    width: 900px;
-    margin: auto;
     /*  */
     height: 100vh;
     text-align: center;
@@ -59,7 +56,7 @@ body.showCart .cart-section{
     transition: transform .5s ease-out .5s
 }
 body.showCart .grid-container{
-    transform: translateX(-10px);
+    transform: translatex(-300px);
     transition: transform .5s ease-out;
 }
 .section-header{
@@ -77,13 +74,6 @@ body.showCart .grid-container{
 
 
 
-.shop-cart-container{
-    cursor: pointer;
-    position: absolute;
-    top: -14px;
-    margin-top: -15px;
-    left: 190px;
-}
 
 
 .cart-column {
@@ -104,6 +94,9 @@ body.showCart .grid-container{
     display: flex;
     justify-content: space-between;
     border: 1px solid #000;
+    
+    top: 40px;
+    background:lightgrey;
 }
 #cart-row {
     position: sticky;
@@ -445,7 +438,78 @@ main{
     background: green;
     padding: 30px;
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> parent of 71968c9 (payment module complete)
+
+#paymentModal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    width: 300px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#paymentModal label,
+#paymentModal input {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#paymentModal button {
+    background-color: #008000;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#paymentModal button:hover {
+    background-color: #006400;
+}
+
+
+/* @media only screen and (max-width: 768px){
+    body {
+
+    }
+} */
+@media (max-width: 768px) {
+    .navbar {
+        display: none; /* Hide the navbar on small screens */
+        position: absolute;
+        top: 60px; /* Adjust the top position as needed */
+        right: 0;
+        background-color: #fff; /* Adjust the background color as needed */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add box-shadow */
+        width: 100%;
+        grid-column: 1 / 13;
+    }
+
+    .navbar ul {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .navbar li {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .popktr-header__menu-button {
+        display: block; /* Show the burger menu on small screens */
+        background: red;
+        /* grid-column: span 4; */
+    }
+    .shopping{
+        /* grid-column: 10 / 11; */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}
