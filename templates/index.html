@@ -243,6 +243,7 @@ nav a:hover {
             <a href="/shop">Shop</a>
             <a href="/add_product">Admin</a>
             <a href="">Customize </a>
+            <a href="">My Purchases</a>
         </nav>
     </header>
 
@@ -358,6 +359,13 @@ nav a:hover {
         function saveCustomDesign() {
             const tshirtContainer = document.getElementById('canvas-container');
 
+            // Check if user is logged in
+            if (!isLoggedIn()) {
+                // Redirect user to login page with current URL as next parameter
+                window.location.href = '/Login?next=' + encodeURIComponent(window.location.href);
+                return;
+            }
+
             // Use dom-to-image to capture the content of the canvas container
             domtoimage.toPng(tshirtContainer)
                 .then(dataUrl => {
@@ -387,6 +395,51 @@ nav a:hover {
                     console.error('Error capturing canvas content:', error);
                 });
         }
+
+        function isLoggedIn() {
+    // Check if the user is logged in based on session storage or any other method you use for authentication
+    const userToken = sessionStorage.getItem('userToken'); // Assuming you store the user token in session storage
+
+    // Return true if the user token exists (indicating the user is logged in), otherwise return false
+    return !!userToken; // Convert to boolean
+}
+        function redirectToLogin(targetPage) {
+            const currentPage = window.location.pathname; // Get the current page URL
+            const nextPage = targetPage + '?next=' + encodeURIComponent(currentPage); // Append the current page URL as a parameter
+            sessionStorage.setItem('targetPage', nextPage); // Store the target page with the appended current page URL
+            window.location.href = '/login'; // Redirect to the login page
+        }
+
+
+        function handleSuccessfulLogin() {
+    const nextPage = sessionStorage.getItem('targetPage');
+    if (nextPage) {
+        sessionStorage.removeItem('targetPage'); // Remove the stored target page after redirecting
+        window.location.href = nextPage; // Redirect the user to the stored target page with the current page parameter
+    } else {
+        // If there's no stored target page, redirect the user to a default page
+        window.location.href = '/dashboard'; // Redirect to the dashboard or any other default page
+    }
+}
+
+function handleSuccessfulSignUp() {
+    const nextPage = sessionStorage.getItem('targetPage');
+    if (nextPage) {
+        sessionStorage.removeItem('targetPage'); // Remove the stored target page after redirecting
+        window.location.href = nextPage; // Redirect the user to the stored target page with the current page parameter
+    } else {
+        // If there's no stored target page, redirect the user to a default page
+        window.location.href = '/dashboard'; // Redirect to the dashboard or any other default page
+    }
+}
+
+
+
+
+// After successful signup
+
+
+
 
         document.addEventListener("DOMContentLoaded", function () {
             const designContainer = document.getElementById('design-container');

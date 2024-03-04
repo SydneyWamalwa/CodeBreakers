@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, g, jsonify,send_from_directory,send_file
+from flask import Flask, render_template, request, redirect, url_for, g, jsonify,send_from_directory,send_file,session
 from io import BytesIO
 # from PIL import Image
 import sqlite3
@@ -7,6 +7,9 @@ import time
 import base64
 import traceback
 from datetime import datetime
+from flask_bcrypt import generate_password_hash, check_password_hash
+from flask_bcrypt import Bcrypt
+from flask_session import Session
 
 
 app = Flask(__name__)
@@ -15,6 +18,7 @@ app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'static', 'uploads')
 app.config['UPLOAD_FOLDER1'] = os.path.join(os.getcwd(), 'static', 'products')
 app.config['PURCHASED_FOLDER'] = os.path.join(os.getcwd(), 'static', 'purchased')  # New folder for purchased screenshots
+bcrypt = Bcrypt(app)
 
 # generate a unique id for product table#
 def generate_unique_id():
@@ -73,6 +77,24 @@ def init_db():
                 price int NOT NULL
             )
         ''')
+
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                email TEXT UNIQUE NOT NULL,
+                password TEXT NOT NULL
+            )
+        ''')
+
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS admins (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                email TEXT UNIQUE NOT NULL,
+                password TEXT NOT NULL
+            )
+        ''')
         db.commit()
 
 # Call the init_db function to ensure all tables are created before running the app
@@ -80,24 +102,197 @@ init_db()
 
 @app.route('/')
 def home():
+    return render_template('dashboard.html')
+
+@app.route('/create')
+def create():
+    if 'user_id' not in session:
+        return redirect(url_for('login', next=request.url))
     return render_template('index.html')
+
+#Auth routes
+@app.route('/Login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        with sqlite3.connect('popkulture.db') as connection:
+            cursor = connection.cursor()
+            cursor.execute("SELECT * FROM users WHERE email=?", (email,))
+            user = cursor.fetchone()
+
+        if user and check_password_hash(user[3], password):
+            # If the user exists, store user information in the session
+            session['user_id'] = user[0]
+            session['user_name'] = user[1]
+
+            # Redirect to the original requested page or the home page
+            return redirect('/SuccessLogin')
+
+        else:
+            # If login fails, you can display an error message or redirect to the login page
+            return render_template('Login.html', error='Invalid credentials')
+
+    return render_template('Login.html')
+
+@app.route('/Login2', methods=['GET', 'POST'])
+def login2():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        with sqlite3.connect('popkulture.db') as connection:
+            cursor = connection.cursor()
+            cursor.execute("SELECT * FROM users WHERE email=?", (email,))
+            user = cursor.fetchone()
+
+        if user and check_password_hash(user[3], password):
+            # If the user exists, store user information in the session
+            session['user_id'] = user[0]
+            session['user_name'] = user[1]
+
+            # Redirect to the original requested page or the home page
+            return redirect('/SuccessLogin2')
+
+        else:
+            # If login fails, you can display an error message or redirect to the login page
+            return render_template('Login2.html', error='Invalid credentials')
+
+    return render_template('Login2.html')
+
+@app.route('/logout')
+def logout():
+    # Clear session variables
+    session.clear()
+    return render_template('index.html')
+
+@app.route('/Signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        # Process the form data here (save to database, perform validation, etc.)
+        name = request.form.get('name')
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        try:
+            # Hash the password before storing it in the database
+            hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+
+            # Insert the user into the users table
+            with sqlite3.connect('popkulture.db') as connection:
+                cursor = connection.cursor()
+                cursor.execute("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", (name, email, hashed_password))
+                connection.commit()
+
+            # Store the user's name in the session
+            session['name'] = name
+            session['email'] = email
+
+            # Redirect to the index page with the user's name as a parameter
+            return redirect('/Success')
+
+        except sqlite3.IntegrityError:
+            # Handle the case where the email is not unique (already exists in the database)
+            return render_template('signup.html', error='Email already exists. Please use a different email.')
+
+    return render_template('Signup.html')
+
+@app.route('/Success')
+def success():
+    # Get the user's name from the session
+    user_name = session.get('name')
+    return render_template('Success.html', user_name=user_name)
+
+@app.route('/SuccessLogin')
+def successlogin():
+    # Get the user's name from the session
+    user_name = session.get('user_name')
+    return render_template('Loginsuccess.html', user_name=user_name)
+
+@app.route('/SuccessLogin2')
+def successlogin2():
+    # Get the user's name from the session
+    user_name = session.get('user_name')
+    return render_template('Loginsuccess2.html', user_name=user_name)
+
+@app.route('/adminsignup', methods=['GET', 'POST'])
+def adminsignup():
+    if request.method == 'POST':
+        # Process the form data here (save to database, perform validation, etc.)
+        name = request.form.get('name')
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        try:
+            # Hash the password before storing it in the database
+            hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+
+            # Insert the user into the users table
+            with sqlite3.connect('popkulture.db') as connection:
+                cursor = connection.cursor()
+                cursor.execute("INSERT INTO admins (name, email, password) VALUES (?, ?, ?)", (name, email, hashed_password))
+                connection.commit()
+
+            # Store the user's name in the session
+            session['name'] = name
+            session['email'] = email
+
+            # Redirect to the index page with the user's name as a parameter
+            return render_template('dashboard.html')
+
+        except sqlite3.IntegrityError:
+            # Handle the case where the email is not unique (already exists in the database)
+            return render_template('Signup.html', error='Email already exists. Please use a different email.')
+
+    return render_template('Admin_signup.html')
+
+@app.route('/LoginAdmin', methods=['GET', 'POST'])
+def loginAdmin():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        with sqlite3.connect('popkulture.db') as connection:
+            cursor = connection.cursor()
+            cursor.execute("SELECT * FROM admins WHERE email=?", (email,))
+            user = cursor.fetchone()
+
+        if user and bcrypt.check_password_hash(user[3], password):
+            # If the user exists and the password is correct, store user information in the session
+            session['user_id'] = user[0]
+            session['user_name'] = user[1]
+
+            # Pass the admin_name to the template
+            return render_template('admin.html', admin_name=user[1])
+
+        else:
+            # If login fails, you can display an error message or redirect to the login page
+            return render_template('Login.html', error='Invalid credentials')
+
+    return render_template('AdminLogin.html')
+
+
 #design routes
 @app.route('/save_canvas', methods=['POST'])
 def save_canvas_content():
-        if request.method == 'POST':
-         canvas_content = request.json.get('canvas_content')
-         img_data = base64.b64decode(canvas_content.split(',')[1])
 
-         os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-         filename = f'tshirt_{int(time.time())}.png'
-         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    if request.method == 'POST':
+        canvas_content = request.json.get('canvas_content')
+        img_data = base64.b64decode(canvas_content.split(',')[1])
 
-         with open(filepath, 'wb') as f:
-             f.write(img_data)
+        os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-         db = get_db()
-         cursor = db.cursor()
+        filename = f'tshirt_{int(time.time())}.png'
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+
+        with open(filepath, 'wb') as f:
+            f.write(img_data)
+
+        # Establish connection to the database
+        db = get_db()
+        cursor = db.cursor()
         cursor.execute('INSERT INTO saved_canvas_content (content) VALUES (?)', (filename,))
         db.commit()
 
@@ -113,6 +308,8 @@ def display_image(filename):
 #shop routes
 @app.route('/shop')
 def products():
+    if 'user_id' not in session:
+        return redirect(url_for('login2', next=request.url))
     db = get_db()
     cursor = db.cursor()
     cursor.execute("SELECT * FROM products")
@@ -310,6 +507,10 @@ def shop_purchased_product():
         except Exception as e:
             print(f"Error saving purchased product details: {e}")
             return jsonify({'status': 'error', 'message': 'Internal Server Error'}), 500
+
+app.route ('dashboard')
+def dashboard():
+    return render_template('dashboard.html')
 
 init_db()
 if __name__ == '__main__':
