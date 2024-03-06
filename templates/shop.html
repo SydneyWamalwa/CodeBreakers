@@ -21,9 +21,10 @@
             <div class="navbar">
                 <nav>
                     <a href="#">shop</a>
-                    <a href="/">Create it</a>
+                    <a href="/create">Create it</a>
                     <a href="#">Blog</a>
                     <a href="#">Contact</a>
+                    <a href="{{ url_for('get_shop_purchased_items', user_id=session['user_id']) }}">My Purchases</a>
                 </nav>
             </div>
             <div class="shopping">

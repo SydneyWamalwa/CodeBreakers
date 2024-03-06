@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Designs</title>
+    <style>
+        /* Add your CSS styling here */
+        /* This is just an example, you can customize it as per your design */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Designs</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for image_path in image_paths %}
+            <tr>
+                <td><img src="{{ url_for('serve_saved_image', filename=image_path) }}" alt="Product Image" style="max-width: 100px;"></td>            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

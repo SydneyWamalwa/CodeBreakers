@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Purchases</title>
+    <style>
+        /* Add your CSS styling here */
+        /* This is just an example, you can customize it as per your design */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Purchases</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Description</th>
+                <th>Size</th>
+                <th>Color Option</th>
+                <th>Image</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in purchased_products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.size }}</td>
+                <td>{{ product.colorOption }}</td>
+                <td><img src="{{ url_for('display_purchased_image', product_id=product.id) }}" alt="Product Image" style="max-width: 100px;"></td>
+                <td>{{ product.price }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
