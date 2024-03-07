@@ -252,11 +252,11 @@ def adminsignup():
             session['email'] = email
 
             # Redirect to the index page with the user's name as a parameter
-            return render_template('dashboard.html')
+            return render_template('admin.html')
 
         except sqlite3.IntegrityError:
             # Handle the case where the email is not unique (already exists in the database)
-            return render_template('Signup.html', error='Email already exists. Please use a different email.')
+            return render_template('signup.html', error='Email already exists. Please use a different email.')
 
     return render_template('Admin_signup.html')
 
