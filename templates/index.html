@@ -241,8 +241,9 @@ nav a:hover {
         <nav>
             <img src="/static/images/logo.jpg" alt="logo" width="50px" height="50px">
             <a href="/shop">Shop</a>
-            <a href="/add_product">Admin</a>
-            <a href="">Customize </a>
+            <a href="{{ url_for('get_purchased_products', user_id=session['user_id']) }}">My Purchases</a>
+            <a href="{{ url_for('get_saved_screenshots', user_id=session['user_id']) }}">My Designs</a>
+            <a href="/logout">Log Out </a>
         </nav>
     </header>
 
@@ -387,6 +388,8 @@ nav a:hover {
                     console.error('Error capturing canvas content:', error);
                 });
         }
+
+
 
         document.addEventListener("DOMContentLoaded", function () {
             const designContainer = document.getElementById('design-container');
@@ -714,9 +717,8 @@ function initiatePayment() {
         captureCanvasScreenshot().then(screenshotUrl => {
             const imageUrl = getSelectedImageUrl();
 
-        // Replace 'your_public_key' with your actual Paystack public key
-        const publicKey = ' pk_test_72adfba481a29bf8d587280ca7d96002ac4210c4';
-        const amountInKobo = 1500 * 100; // Set the price to Ksh.1500
+            const publicKey = 'pk_test_72adfba481a29bf8d587280ca7d96002ac4210c4';
+            const amountInKobo = 1500 * 100;
 
             const handler = PaystackPop.setup({
                 key: publicKey,
