@@ -180,6 +180,8 @@ def logout():
     session.pop('user_name', None)  # Remove user_name from the session
     return redirect(url_for('home'))
 
+
+
 @app.route('/Signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
@@ -593,6 +595,10 @@ def get_purchased_products(user_id):
     except Exception as e:
         print(f"Error fetching purchased products: {e}")
         return jsonify({'status': 'error', 'message': 'Internal Server Error'}), 500
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
 
 init_db()
 if __name__ == '__main__':
