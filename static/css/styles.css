@@ -21,11 +21,13 @@ header.p-3.text-bg-dark  {
 
 /* From Rodneys*/
 
-* {
+/* * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
+} */
+
+
 body {
     /* max-width: 90%;
     width: 900px;
@@ -293,12 +295,12 @@ li a{
     transform: scale(1.5);
 } */
 
-/* .shopping{
+.shopping{
     display: flex;
     align-items: center;
     position: relative;
     justify-content: end;
-} */
+}
 .shop-cart-icon{
     position: absolute;
     z-index: 1;
@@ -308,15 +310,15 @@ li a{
     
 }
 .shop-cart-icon svg{
-    width: 48px;
-    height: 48px;
+    width: 48px !important;
+    height: 48px !important;
 }
 .shop-items-count{
     font-size: small;
     position: absolute;
     right: 0;
     transform: translate(0, -10%);
-    background-color: red;
+    background-color: rgb(0, 0, 0);
     border-radius: 50%;
     padding: 5px 10px;
     z-index: 1;
