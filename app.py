@@ -176,9 +176,9 @@ def login2():
 
 @app.route('/logout')
 def logout():
-    # Clear session variables
-    session.clear()
-    return render_template('index.html')
+    session.pop('user_id', None)  # Remove user_id from the session
+    session.pop('user_name', None)  # Remove user_name from the session
+    return redirect(url_for('home'))
 
 @app.route('/Signup', methods=['GET', 'POST'])
 def signup():
