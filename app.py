@@ -214,9 +214,11 @@ def login2():
 
 @app.route('/logout')
 def logout():
-    # Clear session variables
-    session.clear()
-    return render_template('index.html')
+    session.pop('user_id', None)  # Remove user_id from the session
+    session.pop('user_name', None)  # Remove user_name from the session
+    return redirect(url_for('home'))
+
+
 
 @app.route('/Signup', methods=['GET', 'POST'])
 def signup():
@@ -632,6 +634,10 @@ def get_purchased_products(user_id):
         print(f"Error fetching purchased products: {e}")
         return jsonify({'status': 'error', 'message': 'Internal Server Error'}), 500
 
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
 init_db()
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0",port=5000)

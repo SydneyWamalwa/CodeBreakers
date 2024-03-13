@@ -23,9 +23,8 @@
                 <nav>
                     <a href="#">shop</a>
                     <a href="/create">Create it</a>
-                    <a href="#">Blog</a>
-                    <a href="#">Contact</a>
-                    <a href="{{ url_for('get_shop_purchased_items', user_id=session['user_id']) }}">My Purchases</a>
+                    <a href="/contact">Contact</a>
+                    <a href="/logout">Logout</a>
                 </nav>
             </div>
             <div class="shopping">
@@ -74,44 +73,6 @@
             {% endfor %}
 
         </main>
-        <footer class="footer">
-            <div class="rodney">
-                <p class="contributors">Rodney</p>
-                <div class="social-media">
-                    <a href="https://facebook.com" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="https://twitter.com" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="www.linkedin.com/in/rodneygitonga" class="social-icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                    <a href="https://github.com/R-gitongaa" class="social-icon"><i class="fa-brands fa-github"></i></a>
-                </div>
-            </div>
-            <div class="brian">
-                <p class="contributors">brian</p>
-                <div class="social-media">
-                    <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="#" class="social-icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                    <a href="#" class="social-icon"><i class="fa-brands fa-github"></i></a>
-                </div>
-            </div>
-            <div class="laura">
-                <p class="contributors">Laura</p>
-                <div class="social-media">
-                    <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="#" class="social-icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                    <a href="#" class="social-icon"><i class="fa-brands fa-github"></i></a>
-                </div>
-            </div>
-            <div class="sydney">
-                <p class="contributors">Sydney</p>
-                <div class="social-media">
-                    <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="#" class="social-icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                    <a href="#" class="social-icon"><i class="fa-brands fa-github"></i></a>
-                </div>
-            </div>
-        </footer>
     </div>
     <script src="https://js.paystack.co/v1/inline.js"></script>
     <script src="https://kit.fontawesome.com/314fd1ee01.js" crossorigin="anonymous"></script>
