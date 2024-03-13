@@ -19,6 +19,19 @@
         th {
             background-color: #f2f2f2;
         }
+        /* Grid layout for images */
+        tbody {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            grid-gap: 10px;
+        }
+        td {
+            padding: 0; /* Remove padding from table cells */
+        }
+        img {
+            width: 100%; /* Make images fill their respective cells */
+            height: auto;
+        }
     </style>
 </head>
 <body>
@@ -32,7 +45,8 @@
         <tbody>
             {% for image_path in image_paths %}
             <tr>
-                <td><img src="{{ url_for('serve_saved_image', filename=image_path) }}" alt="Product Image" style="max-width: 100px;"></td>            </tr>
+                <td><img src="{{ url_for('serve_saved_image', filename=image_path) }}" alt="Product Image"></td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>
