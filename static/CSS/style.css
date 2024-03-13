@@ -499,7 +499,10 @@ a.social-icon{
 #paymentModal button:hover {
     background-color: #006400;
 }
-
+#purchaseBtn{
+    background-color: #008000;
+    height: fit-content;
+}
 
 /* @media only screen and (max-width: 768px){
     body {

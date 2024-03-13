@@ -10,6 +10,9 @@ from datetime import datetime
 from flask_bcrypt import generate_password_hash, check_password_hash
 from flask_bcrypt import Bcrypt
 from flask_session import Session
+from flask_sqlalchemy import SQLAlchemy
+# from app import app, db, Purchase
+
 
 
 secret_key = os.urandom(24)
@@ -24,6 +27,41 @@ app.config['PURCHASED_FOLDER'] = os.path.join(os.getcwd(), 'static', 'purchased'
 bcrypt = Bcrypt(app)
 Session(app)
 
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///popkulture.db'
+db = SQLAlchemy(app)
+
+
+# model for purchase table
+class Purchase(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(120), nullable=False)
+    reference = db.Column(db.String(100), nullable=False)
+    total_amount = db.Column(db.Float, nullable=False)
+    items_purchased = db.Column(db.Text, nullable=False)
+
+    def __repr__(self):
+        return f"Purchase(email='{self.email}', reference='{self.reference}', total_amount='{self.total_amount}', items_purchased='{self.items_purchased}')"
+
+@app.route('/store-shop-purchase', methods=['POST'])
+def store_shop_purchase():
+    try:
+        # Extract data from the request
+        data = request.json
+        user_email = data.get('user_email')
+        description = data.get('description')
+        image = data.get('image')
+        price = data.get('price')
+
+        # Store purchase data in the database
+        purchase = Purchase(user_email=user_email, description=description, image=image, price=price)
+        db.session.add(purchase)
+        db.session.commit()
+
+        return jsonify({'message': 'Shop purchase data stored successfully'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
 
 # generate a unique id for product table#
 def generate_unique_id():
@@ -499,31 +537,31 @@ def display_purchased_image(product_id):
         print(f"Error fetching purchased image: {e}")
         return jsonify({'status': 'error', 'message': 'Internal Server Error'}), 500
 
-#shop payment routes
-@app.route('/shop_purchased_product', methods=['POST'])
-def shop_purchased_product():
-    if request.method == 'POST':
-        try:
-            # Retrieve product details from the request
-            user_email = request.json.get('user_email')
-            image_url = request.json.get('image')
-            price = request.json.get('price')
-            description=request.json.get('description')
+# #shop payment routes
+# @app.route('/shop_purchased_product', methods=['POST'])
+# def shop_purchased_product():
+#     if request.method == 'POST':
+#         try:
+#             # Retrieve product details from the request
+#             user_email = request.json.get('user_email')
+#             image_url = request.json.get('image')
+#             price = request.json.get('price')
+#             description=request.json.get('description')
 
-            # Insert the purchased product details into the database
-            db = get_db()
-            cursor = db.cursor()
-            cursor.execute(
-                'INSERT INTO purchased_shop_products (userEmail, image, price,description) VALUES (?, ?, ?, ?)',
-                (user_email, image_url, price,description)
-            )
-            db.commit()
-            db.close()
+#             # Insert the purchased product details into the database
+#             db = get_db()
+#             cursor = db.cursor()
+#             cursor.execute(
+#                 'INSERT INTO purchased_shop_products (userEmail, image, price,description) VALUES (?, ?, ?, ?)',
+#                 (user_email, image_url, price,description)
+#             )
+#             db.commit()
+#             db.close()
 
-            return jsonify({'status': 'success'})
-        except Exception as e:
-            print(f"Error saving purchased product details: {e}")
-            return jsonify({'status': 'error', 'message': 'Internal Server Error'}), 500
+#             return jsonify({'status': 'success'})
+#         except Exception as e:
+#             print(f"Error saving purchased product details: {e}")
+#             return jsonify({'status': 'error', 'message': 'Internal Server Error'}), 500
 
 
 # Retrieve a specific user's saved screenshots
