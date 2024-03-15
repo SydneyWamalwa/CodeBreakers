@@ -10,7 +10,6 @@ from datetime import datetime
 from flask_bcrypt import generate_password_hash, check_password_hash
 from flask_bcrypt import Bcrypt
 from flask_session import Session
-from flask_sqlalchemy import SQLAlchemy
 # from app import app, db, Purchase
 
 
